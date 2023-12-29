@@ -1,0 +1,22 @@
+[push]
+    autoSetupRemote = true
+
+[user]
+	name = Karolis Pabijanskas
+    email = {{ .personal.email }}
+
+[includeIf "gitdir:~/repos/{{ .work.git.domain }}/"]
+    path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/workspaces/"]
+    path = ~/.gitconfig-work
+
+[url "https://{{ .work.git.httpscreds }}@{{ .work.git.domain }}/"]
+     insteadOf = "https://{{ .work.git.domain }}/"
+     insteadOf = "git@{{ .work.git.domain }}:"
+
+[http "https://{{ .work.git.domain }}"]
+     proxy = {{ .work.git.proxy }}
+
+[pull]
+	rebase = true
