@@ -45,9 +45,11 @@ in {
           brew upgrade
         '';
         nix-up.body = ''
-        cd ~/nix
-        nix-channel --update
-        home-manager switch --flake .#karolispabijanskas@NS-PF43XW2B -b backup
+          cd ~/nix
+          nix-channel --update
+          nix flake update
+          ejson-templater -srcDir ./templates -secretsFile ~/.secrets.ejson -dstDir ./generated
+          home-manager switch --flake path:"$PWD#$(hostname -f)" -b backup
         '';
         up.body = (if isLinux then ''
           echo ">>>> Updating DNF"
