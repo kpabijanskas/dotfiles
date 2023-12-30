@@ -2,12 +2,18 @@
 tags:
   - journal
   - daily
-links:
-  - [[journal/weekly/{{format-date (date title) "%Y-W%U"}}|Week {{format-date (date title) "%U"}}]]
-  - [[journal/daily/{{format-date (date "yesterday") '%Y-%m-%d'}}|Day Before]]
-  - [[journal/daily/{{format-date (date "tomorrow") '%Y-%m-%d'}}|Day After]]
+year: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]
+month: [[journal/monthly/{{ extra.year_month }}|{{ extra.year_month }}]]
+week: [[journal/weekly/{{ extra.year_week }}|{{ extra.year_week }}]]
+previous: [[journal/daily/{{ extra.date_before }}|{{ extra.weekday_before }}]]
+next: [[journal/daily/{{ extra.date_after }}|{{ extra.weekday_after }}]]
   ---
-# Daily Journal: {{format-date now '%Y-%m-%d'}}
+# Daily Journal: {{ extra.date }} ({{ extra.weekday }})
 
 # Plan
 - [ ]
+
+# Summary
+## Personal
+
+## Work

@@ -1,9 +1,11 @@
 {
+  inputs,
   pkgs,
   ...
 }: {
   home = {
     packages = with pkgs; [
+      inputs.dategenforzk.packages.x86_64-linux.default
       git-sync
       marksman
       zk
@@ -17,6 +19,12 @@
       };
       ".config/zk/templates/weekly.md" = {
         source = ../files/zk_templates_weekly.md;
+      };
+      ".config/zk/templates/monthly.md" = {
+        source = ../files/zk_templates_monthly.md;
+      };
+      ".config/zk/templates/yearly.md" = {
+        source = ../files/zk_templates_yearly.md;
       };
       ".config/zk/templates/default.md" = {
         source = ../files/zk_templates_default.md;

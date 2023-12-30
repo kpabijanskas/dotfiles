@@ -12,6 +12,9 @@
 
     exec-lsp.url = "github:kpabijanskas/exec-lsp/v1.0.0";
     exec-lsp.inputs.nixpkgs.follows = "nixpkgs";
+
+    dategenforzk.url = "path:modules/software/dategenforzk/";
+    dategenforzk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

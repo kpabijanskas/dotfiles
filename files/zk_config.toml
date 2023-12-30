@@ -13,9 +13,13 @@ id-case = "lower"
 
 [extra]
 
+[group.inbox]
+paths = ["inbox"]
+[group.inbox.note]
+filename = "{{title}}"
+
 [group.daily]
 paths = ["journal/daily"]
-
 [group.daily.note]
 filename = "{{ format-date now '%Y-%m-%d' }}"
 template = "daily.md"
@@ -23,12 +27,23 @@ template = "daily.md"
 [group.weekly]
 paths = ["journal/weekly"]
 [group.weekly.note]
-filename = "{{ format-date now '%Y-W%U' }}"
+filename = "{{ title }}"
 template = "weekly.md"
+
+[group.monthly]
+paths = ["journal/monthly"]
+[group.monthly.note]
+filename = "{{ title }}"
+template = "monthly.md"
+
+[group.yearly]
+paths = ["journal/yearly"]
+[group.yearly.note]
+filename = "{{ title }}"
+template = "yearly.md"
 
 [group.projects]
 paths = ["projects/personal", "projects/work"]
-
 [group.projects.tool]
 fzf-line = '[{{metadata.state}}] {{style "bold" title}}'
 
@@ -52,12 +67,41 @@ dead-link = "error"
 [filter]
 
 [alias]
+a = 'zk new --title=(string join " " $argv) inbox'
 n = 'zk new --title=(string join " " $argv)'
 nwproject = 'zk new --template=wproject.md --title=(string join " " $argv) projects/work'
 npproject = 'zk new --template=pproject.md --title=(string join " " $argv) projects/personal'
 e = 'zk edit --interactive'
-d = 'zk new --no-input journal/daily'
-w = 'zk new --no-input journal/weekly'
+d = """
+  set DATE $argv
+  test "$DATE" != "" || set DATE $(date "+%Y-%m-%d")
+  echo $DATE|grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' || begin; echo "bad date format"; exit 1; end
+  set DATE $(date --date=$DATE "+%Y-%m-%d")
+  set VARS $(dategenforzk -txt $DATE)
+  zk new --no-input --title=$DATE --extra=$VARS journal/daily
+"""
+w = """
+  set DATE $argv
+  test "$DATE" != "" || set DATE $(date "+%Y-W%U")
+  echo $DATE|grep -Eq '^[0-9]{4}-W[0-9]{2}$' || begin; echo "bad date format"; exit 1; end
+  set VARS $(dategenforzk -txt $DATE)
+  zk new --no-input --title=$DATE --extra=$VARS journal/weekly
+"""
+m = """
+  set DATE $argv
+  test "$DATE" != "" || set DATE $(date "+%Y-%m")
+  echo $DATE|grep -Eq '^[0-9]{4}-[0-9]{2}$' || begin; echo "bad date format"; exit 1; end
+  set DATE $(date --date=$DATE-01 "+%Y-%m")
+  set VARS $(dategenforzk -txt $DATE)
+  zk new --no-input --title=$DATE --extra=$VARS journal/monthly
+"""
+y = """
+  set DATE $argv
+  test "$DATE" != "" || set DATE $(date "+%Y")
+  set DATE $(date --date=$DATE-01-01 "+%Y")
+  set VARS $(dategenforzk -txt $DATE)
+  zk new --no-input --title=$DATE --extra=$VARS journal/yearly
+"""
 last = 'zk edit --limit 1 --sort modified- (string join " " $argv)'
 conf = '$EDITOR ~/.config/zk/config.toml'
 sync = 'git-sync -ns'

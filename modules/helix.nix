@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   ...
 }: {
@@ -9,7 +10,6 @@
 				dockerfile-language-server-nodejs
 				gopls
 				lua-language-server
-        marksman
         nil
 				nodePackages.bash-language-server
 				nodePackages.vscode-json-languageserver
@@ -80,23 +80,19 @@
           { name = "tsx"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
           { name = "svelte"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
           { name = "c"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "markdown"; language-servers = [ "execlspnotes" "marksman" "zk" ]; indent = { tab-width = 2; unit = " ";};}
+          { name = "markdown"; language-servers = [ "execlspnotes" "zk" ]; indent = { tab-width = 2; unit = " ";}; }
         ];
         language-server = {
           zk = {
             command = "${pkgs.zk}/bin/zk";
             args = ["lsp" "--notebook-dir" "/home/karolispabijanskas/notes" "--no-input"];
           };
-          marksman = {
-            command = "${pkgs.marksman}/bin/marksman";
-            args = ["server"];
-          };
           execlspgo = {
-            command = "/home/karolispabijanskas/bin/execlsp";
+            command = "${inputs.exec-lsp.packages.x86_64-linux.default}/bin/exec-lsp";
             args = ["-presets=go"];
           };
           execlspnotes = {
-            command = "/home/karolispabijanskas/bin/execlsp";
+            command = "${inputs.exec-lsp.packages.x86_64-linux.default}/bin/exec-lsp";
             args = ["-presets=notes"];
           };
         };
