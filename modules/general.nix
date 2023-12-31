@@ -38,9 +38,6 @@
       protobuf
       protoc-gen-go-grpc
       pwgen
-      python311Full
-      python311Packages.pip
-      python311Packages.ipython
       redis
       rustup
       serfdom

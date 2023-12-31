@@ -2,10 +2,10 @@
 tags:
   - journal
   - yearly
-previous: [[journal/yearly/{{ extra.year_before }}|{{ extra.year_before }}]]
-next: [[journal/yearly/{{ extra.year_after }}|{{ extra.year_after }}]]
 ---
 # Yearly Journal: {{ extra.year }}
+**Previous**: [[journal/yearly/{{ extra.year_before }}|{{ extra.year_before }}]]
+**Next**: [[journal/yearly/{{ extra.year_after }}|{{ extra.year_after }}]]
 
 ## Monthly Notes
 - [[journal/monthly/{{ extra.year }}-01|January]]

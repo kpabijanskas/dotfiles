@@ -2,11 +2,11 @@
 tags:
   - journal
   - monthly
-year: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]
-previous: [[journal/monthly/{{ extra.year_month_before }}|{{ extra.year_month_before }}]]
-next: [[journal/monthly/{{ extra.year_month_after }}|{{ extra.year_month_after }}]]
 ---
 # Monthly Journal: {{ extra.year_month }}
+**Year**: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]
+**Previous**: [[journal/monthly/{{ extra.year_month_before }}|{{ extra.year_month_before }}]]
+**Next**: [[journal/monthly/{{ extra.year_month_after }}|{{ extra.year_month_after }}]]
 
 ## Weekly Notes
 {{#if extra.year_weeks_in_month_1 }}
