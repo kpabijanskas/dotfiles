@@ -63,6 +63,7 @@
             space = {
               C-w = ":write!";
               C-x = ":write-quit-all!";
+              C-R = ":lsp-restart";
             };
             C-e = [":lsp-workspace-command"];
           };

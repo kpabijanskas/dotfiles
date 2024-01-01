@@ -15,12 +15,8 @@
         source = ../files/add_project_todo.fish;
         executable = true;
       };
-      "bin/list_project_todos.fish" = {
-        source = ../files/list_project_todos.fish;
-        executable = true;
-      };
-      "bin/mark_done_project_todos.fish" = {
-        source = ../files/mark_done_project_todos.fish;
+      "bin/project_todos.fish" = {
+        source = ../files/project_todos.fish;
         executable = true;
       };
     };

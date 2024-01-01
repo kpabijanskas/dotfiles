@@ -49,6 +49,7 @@ in {
           cd ~/nix
           nix-channel --update
           nix flake update
+          rm ./generated/*
           ejson-templater -srcDir ./templates -secretsFile ~/.secrets.ejson -dstDir ./generated
           home-manager switch --flake path:"$PWD#$(hostname -f)" -b backup
           cd $cwd

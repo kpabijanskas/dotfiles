@@ -5,31 +5,25 @@
 let
   packageOverrides = pkgs.callPackage ./software/pter/default.nix { };
   python = pkgs.python3.override { inherit packageOverrides; };
-  pythonWithPackages = python.withPackages (ps: [ ps.pter ]);
+  pter = python.withPackages (ps: [ ps.pter ]);
 in {
   home = {
-    packages = with pkgs; [
-      pythonWithPackages
-      todo-txt-cli
-      topydo
-      ttdl
+    packages = [
+      pter
     ];
     file = {
-      ".config/ttdl/ttdl.toml" = {
-        source = ../files/ttdl.toml;
+      ".config/pter/pter.conf" = {
+        source = ../generated/pter.conf;
       };
-      ".config/fish/completions/todotxt.fish" = {
-        source = ../files/todo_fish_completion.fish ;
-      };
-      ".todo/config" = {
-        source = ../generated/todo_config;
+      ".config/pter/searches.txt" = {
+        source = ../files/pter_searches.txt;
       };
     };
   };
   programs = {
     fish = {
       shellAliases = {
-        t = "todo.sh";
+        p = "pter";
 			};
 		};
   };
