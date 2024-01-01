@@ -1,7 +1,5 @@
 ---
-tags:
-  - journal
-  - yearly
+tags: [journal, yearly]
 ---
 # Yearly Journal: {{ extra.year }}
 **Previous**: [[journal/yearly/{{ extra.year_before }}|{{ extra.year_before }}]]

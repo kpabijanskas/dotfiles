@@ -1,7 +1,5 @@
 ---
-tags:
-  - journal
-  - daily
+tags: [journal, daily]
 ---
 # Daily Journal: {{ extra.date }} ({{ extra.weekday }})
 **Year**: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]

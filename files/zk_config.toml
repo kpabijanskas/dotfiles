@@ -80,6 +80,11 @@ d = """
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/daily
 """
+t = """
+  set DATE $(date --date=tomorrow "+%Y-%m-%d")
+  set VARS $(dategenforzk -txt $DATE)
+  zk new --no-input --title=$DATE --extra=$VARS journal/daily
+"""
 w = """
   set DATE $argv
   test "$DATE" != "" || set DATE $(date "+%Y-W%U")

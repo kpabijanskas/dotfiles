@@ -1,7 +1,5 @@
 ---
-tags:
-  - journal
-  - weekly
+tags: [journal, weekly]
 ---
 # Weekly Journal: {{ extra.year_week }}
 **Year**: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]

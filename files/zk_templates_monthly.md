@@ -1,7 +1,5 @@
 ---
-tags:
-  - journal
-  - monthly
+tags: [journal, monthly]
 ---
 # Monthly Journal: {{ extra.year_month }}
 **Year**: [[journal/yearly/{{ extra.year }}|{{ extra.year }}]]
