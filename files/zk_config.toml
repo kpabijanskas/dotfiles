@@ -42,11 +42,6 @@ paths = ["journal/yearly"]
 filename = "{{ title }}"
 template = "yearly.md"
 
-[group.projects]
-paths = ["projects/personal", "projects/work"]
-[group.projects.tool]
-fzf-line = '[{{metadata.state}}] {{style "bold" title}}'
-
 [format.markdown]
 link-format = "[[{{path}}|{{title}}]]"
 hashtags = true
@@ -67,11 +62,19 @@ dead-link = "error"
 [filter]
 
 [alias]
+# Add an item to inbox
 a = 'zk new --title=(string join " " $argv) inbox'
+# Add an item to the main group 
 n = 'zk new --title=(string join " " $argv)'
-nwproject = 'zk new --template=wproject.md --title=(string join " " $argv) projects/work'
-npproject = 'zk new --template=pproject.md --title=(string join " " $argv) projects/personal'
-e = 'zk edit --interactive'
+# New Work Project
+npw = 'zk new --template=wproject.md --title=(string join " " $argv)'
+# New Personal Project
+npp = 'zk new --template=pproject.md --title=(string join " " $argv)'
+# List and edit non-journal and non-project
+e = 'zk edit --interactive -t "NOT journal" -t "NOT project"'
+# List and edit all
+ea = 'zk edit --interactive'
+# Edit daily notes
 d = """
   set DATE $argv
   test "$DATE" != "" || set DATE $(date "+%Y-%m-%d")
@@ -80,11 +83,13 @@ d = """
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/daily
 """
+# Edit tomorrows note (special common daily notes case)
 t = """
   set DATE $(date --date=tomorrow "+%Y-%m-%d")
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/daily
 """
+# Edit weekly notes
 w = """
   set DATE $argv
   test "$DATE" != "" || set DATE $(date "+%Y-W%U")
@@ -92,6 +97,7 @@ w = """
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/weekly
 """
+# Edit monthly notes
 m = """
   set DATE $argv
   test "$DATE" != "" || set DATE $(date "+%Y-%m")
@@ -100,6 +106,7 @@ m = """
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/monthly
 """
+# Edit yearly notes
 y = """
   set DATE $argv
   test "$DATE" != "" || set DATE $(date "+%Y")
@@ -111,5 +118,27 @@ last = 'zk edit --limit 1 --sort modified- (string join " " $argv)'
 conf = '$EDITOR ~/.config/zk/config.toml'
 sync = 'git-sync -ns'
 rm = 'rm $argv.md || rm $argv'
-wprojects = 'zk edit --tag project --tag work --interactive projects/work'
-pprojects = 'zk edit --tag project --tag personal --interactive projects/personal'
+# Work active projects
+pw = 'zk edit --tag project --tag work -t active --interactive'
+# Personal active projects
+pp = 'zk edit --tag project --tag personal -t active --interactive'
+# Work parked projects
+pwp = 'zk edit --tag project --tag work -t parked --interactive'
+# Personal parked projects
+ppp = 'zk edit --tag project --tag personal -t parked --interactive'
+# Work archived projects
+pwa = 'zk edit --tag project --tag work -t archived --interactive'
+# Personal archived projects
+ppa = 'zk edit --tag project --tag personal-t archived --interactive'
+# Archive project
+parchive = """
+   zk list --format=path --interactive -t "project" -t "NOT archived" | xargs -I {} yq -i --front-matter=process '.tags[] |= sub("(active|parked)", "archive")' {}
+"""
+# Park project
+ppark = """
+   zk list --format=path --interactive -t "project" -t "NOT parked" | xargs -I {} yq -i --front-matter=process '.tags[] |= sub("(active|archived)", "parked")' {}
+"""
+# Activate project
+pactivate = """
+   zk list --format=path --interactive -t "project" -t "NOT active" | xargs -I {} yq -i --front-matter=process '.tags[] |= sub("(parked|archived)", "active")' {}
+"""

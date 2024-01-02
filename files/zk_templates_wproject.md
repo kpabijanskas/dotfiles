@@ -2,7 +2,7 @@
 tags:
   - project
   - work
-state: active
+  - active
 ---
 # Work Project: {{ title }}
 

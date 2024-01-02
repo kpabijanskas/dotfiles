@@ -2,7 +2,7 @@
 tags:
   - project
   - personal
-state: active
+  - active
 ---
 # Personal Project: {{ title }}
 

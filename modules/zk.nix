@@ -8,6 +8,7 @@
       inputs.dategenforzk.packages.x86_64-linux.default
       git-sync
       marksman
+      yq-go
       zk
     ];
     file = {
