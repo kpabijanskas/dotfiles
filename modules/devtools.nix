@@ -19,6 +19,10 @@
         source = ../files/project_todos.fish;
         executable = true;
       };
+      "bin/open_project_file.fish" = {
+        source = ../files/open_project_file.fish;
+        executable = true;
+      };
     };
   };
 }
