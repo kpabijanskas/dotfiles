@@ -13,6 +13,7 @@
           "go" = pkgs.mkShell {
             packages = with pkgs; [
               go
+              gopls
               gotools
               golangci-lint
               delve

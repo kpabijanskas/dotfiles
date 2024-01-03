@@ -76,6 +76,13 @@ in {
         last_history_item.body = ''
           echo $history[1]
         '';
+        zellij = ''
+          if count $argv > /dev/null
+            ${pkgs.zellij}/bin/zellij $argv
+          else
+            ${pkgs.zellij}/bin/zellij a --create
+          end
+        '';
       };
 
     };

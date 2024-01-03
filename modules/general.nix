@@ -23,6 +23,7 @@
       ipcalc
       just
       libbpf
+      litecli
       lua
       lua52Packages.luarocks
       mage
