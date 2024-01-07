@@ -9,6 +9,9 @@ tags: [journal, daily]
 **Next**: [[journal/daily/{{ extra.date_after }}|{{ extra.weekday_after }}]]
 
 # Plan
+{{#equal extra.weekday "Sunday" }}
+- [ ] Weekly review
+{{/equal}}
 - [ ]
 
 # Summary
