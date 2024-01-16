@@ -1,11 +1,12 @@
+# This is actually a macmini, but my dev env is a Fedora box in OrbStack
 {
   inputs,
   system,
   ...
 }: {
-   config = inputs.home-manager.lib.homeManagerConfiguration {
+  config = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = inputs.nixpkgs.legacyPackages."${system}";
-    extraSpecialArgs = {inherit inputs ;};
+    extraSpecialArgs = {inherit inputs system;};
     modules = [
       {
         home = {
@@ -16,6 +17,7 @@
       ../modules/general.nix
       ../modules/zk.nix
       ../modules/todo.nix
+      ../modules/exercism.nix
       ../modules/zellij.nix
       ../modules/helix.nix
       ../modules/atuin.nix

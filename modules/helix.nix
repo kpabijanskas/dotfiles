@@ -1,12 +1,25 @@
 {
-  inputs,
   pkgs,
   ...
-}: {
+}: let
+  execlsp = pkgs.callPackage ../pkgs/execlsp.nix {};
+  scripts = pkgs.callPackage ../pkgs/todo_scripts.nix {};
+in {
+  home = {
+    file = {
+      ".config/execlsp.ini" = {
+        source = ../files/execlsp.ini;
+      };
+    };
+  };
 	programs = {
     helix = {
       enable = true;
-      extraPackages = with pkgs; [
+      extraPackages = with pkgs; with scripts; [
+        add_project_todo
+        project_todos
+        open_project_file
+        execlsp
 				dockerfile-language-server-nodejs
 				gopls
 				lua-language-server
@@ -89,11 +102,11 @@
             args = ["lsp" "--notebook-dir" "/home/karolispabijanskas/notes" "--no-input"];
           };
           execlspgo = {
-            command = "${inputs.exec-lsp.packages.x86_64-linux.default}/bin/exec-lsp";
+            command = "${execlsp}/bin/exec-lsp";
             args = ["-presets=go"];
           };
           execlspnotes = {
-            command = "${inputs.exec-lsp.packages.x86_64-linux.default}/bin/exec-lsp";
+            command = "${execlsp}/bin/exec-lsp";
             args = ["-presets=notes"];
           };
         };

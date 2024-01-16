@@ -1,15 +1,15 @@
 {
-  inputs,
-  pkgs,
+  pkgs, 
   ...
-}: {
+}: let
+  dategenforzk =  pkgs.callPackage ../pkgs/dategenforzk.nix {  };
+in {
   home = {
     packages = with pkgs; [
-      inputs.dategenforzk.packages.x86_64-linux.default
       git-sync
       marksman
       yq-go
-      zk
+      dategenforzk
     ];
     file = {
       ".config/zk/config.toml" = {

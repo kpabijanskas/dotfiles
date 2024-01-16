@@ -1,10 +1,5 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: 
-let
-  add_project_todo = pkgs.writeScriptBin "add_project_todo" ''
+{ writeScriptBin }: {
+	 add_project_todo = writeScriptBin "add_project_todo" ''
     #!/bin/fish
 
     set FILE $(mktemp)
@@ -18,7 +13,7 @@ let
     end
     rm $FILE
   '';
-  project_todos = pkgs.writeScriptBin "project_todos" ''
+  project_todos = writeScriptBin "project_todos" ''
     #!/bin/fish
 
     set PROJECT $(git rev-parse --show-toplevel|xargs -I {} basename {})
@@ -28,7 +23,7 @@ let
       echo "no repo set"
     end
   '';
-  open_project_file = pkgs.writeScriptBin "open_project_file" ''
+  open_project_file = writeScriptBin "open_project_file" ''
     #!/bin/fish
     set -l cwd (pwd)
     set -l dir (pwd)
@@ -50,19 +45,5 @@ let
     echo "no project file found"
     cd $cwd
   '';
-in {
-  home = {
-    packages =  [
-      inputs.ejson-templater.packages.x86_64-linux.default
-      inputs.exec-lsp.packages.x86_64-linux.default
-      add_project_todo
-      project_todos
-      open_project_file
-    ];
-    file = {
-      ".config/execlsp.ini" = {
-        source = ../files/execlsp.ini;
-      };
-    };
-  };
 }
+

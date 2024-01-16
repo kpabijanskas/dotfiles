@@ -6,9 +6,6 @@
 		  ".gitconfig" = {
 				source = ../generated/gitconfig;
 			};
-		  ".gitconfig-work" = {
-				source = ../generated/gitconfig-work;
-			};
 		};
 	};
 	programs = {

@@ -3,9 +3,7 @@
   ...
 }: 
 let
-  packageOverrides = pkgs.callPackage ./software/pter/default.nix { };
-  python = pkgs.python3.override { inherit packageOverrides; };
-  pter = python.withPackages (ps: [ ps.pter ]);
+  pter = (pkgs.callPackage ../pkgs/pter.nix { }).pter;
 in {
   home = {
     packages = [

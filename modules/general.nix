@@ -1,9 +1,12 @@
 {
   pkgs,
   ...
-}: {
+}: let
+  ejson-templater = pkgs.callPackage ../pkgs/ejson-templater.nix {};
+in {
   home = {
     packages = with pkgs; [
+      ejson-templater
       arping
       bpftools
       coreutils
@@ -29,6 +32,7 @@
       mage
       mosh
       most
+      ngrep
       nodejs_21
       openssl
       openvpn
@@ -70,6 +74,9 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
+    permittedInsecurePackages = [
+      "teleport-11.3.27" # :(
+    ];
   };
 
   programs = {
