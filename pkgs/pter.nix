@@ -25,10 +25,10 @@ in rec {
   };
   pter = buildPythonPackage {
     pname = "pter";
-    version = "3.12.0";
+    version = "3.13.0";
     src = fetchurl {
-      url = "https://files.pythonhosted.org/packages/0a/18/69966444d3cd6b078ece7e7ba3256d05811275a2a5b4cb9942e70465c2f5/pter-3.12.0-py3-none-any.whl";
-      sha256 = "0v4jpbr54wmcqj94lifq8m411gfd0krayadc3c0pzjbyc24g2wq0";
+      url = "https://files.pythonhosted.org/packages/05/15/cebee3661615816a7849a3414b32089eed8b202e761ed76208da6184201c/pter-3.13.0-py3-none-any.whl";
+      sha256 = "sha256-8aIFFkgMCi5oly4QitAZyCU8ftkXS99r7N1CdVWYniw=";
     };
     format = "wheel";
     doCheck = false;
