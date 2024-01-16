@@ -2,8 +2,8 @@
   buildGoModule,
   fetchFromGitHub,
   name ? "ejson-templater",
-  version ? "1.0.1",
-  hash ? "sha256-7tdxGv2s8652Xe4WvXErHhoXARAXDQptb8jpM1MbIp8=",
+  version ? "1.0.2",
+  hash ? "sha256-qJRSZ2YydoW0MOrN4pp+k4RLnijOSiFN3C6VgV8jaGo=",
   vendorHash ? "sha256-p5/w5uiUQ00IImQJjxClxnMX6yljhdTKoxJqA7lqeK0="
 }: buildGoModule {
   pname = "${name}";

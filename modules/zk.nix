@@ -6,6 +6,7 @@
 in {
   home = {
     packages = with pkgs; [
+      zk
       git-sync
       marksman
       yq-go
