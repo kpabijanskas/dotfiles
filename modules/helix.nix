@@ -3,7 +3,6 @@
   ...
 }: let
   execlsp = pkgs.callPackage ../pkgs/execlsp.nix {};
-  scripts = pkgs.callPackage ../pkgs/todo_scripts.nix {};
 in {
   home = {
     file = {
@@ -15,10 +14,7 @@ in {
 	programs = {
     helix = {
       enable = true;
-      extraPackages = with pkgs; with scripts; [
-        add_project_todo
-        project_todos
-        open_project_file
+      extraPackages = with pkgs; [
         execlsp
 				dockerfile-language-server-nodejs
 				gopls
@@ -26,6 +22,9 @@ in {
         nil
 				nodePackages.bash-language-server
 				nodePackages.vscode-json-languageserver
+        nodePackages.svelte-language-server
+        nodePackages.typescript-language-server
+        nodePackages.vscode-html-languageserver-bin 
 				rust-analyzer
 				yaml-language-server
         zk
@@ -108,6 +107,9 @@ in {
           execlspnotes = {
             command = "${execlsp}/bin/exec-lsp";
             args = ["-presets=notes"];
+          };
+          html-languageserver = {
+            command = "${pkgs.nodePackages.vscode-html-languageserver-bin}/bin/html-languageserver";
           };
         };
       };

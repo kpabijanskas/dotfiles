@@ -3,9 +3,13 @@
   ...
 }: let
   ejson-templater = pkgs.callPackage ../pkgs/ejson-templater.nix {};
+  scripts = pkgs.callPackage ../pkgs/todo_scripts.nix {};
 in {
   home = {
-    packages = with pkgs; [
+    packages = with pkgs; with scripts; [
+      add_project_todo
+      project_todos
+      open_project_file
       ejson-templater
       arping
       bpftools
@@ -53,6 +57,7 @@ in {
       speedtest-cli
       tshark
       teleport_11 # newer doesn't work atm
+      typescript
       util-linux
       vagrant
       vault
