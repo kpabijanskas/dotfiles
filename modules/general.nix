@@ -56,7 +56,7 @@ in {
       sqlite
       speedtest-cli
       tshark
-      teleport_11 # newer doesn't work atm
+      teleport_12 # newer doesn't work atm
       typescript
       util-linux
       vagrant
@@ -79,9 +79,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
-    permittedInsecurePackages = [
-      "teleport-11.3.27" # :(
-    ];
   };
 
   programs = {
@@ -99,5 +96,5 @@ in {
     };
   };
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 }
