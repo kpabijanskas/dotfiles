@@ -1,22 +1,13 @@
 {
   pkgs,
   ...
-}: let
-  execlsp = pkgs.callPackage ../pkgs/execlsp.nix {};
-in {
-  home = {
-    file = {
-      ".config/execlsp.ini" = {
-        source = ../files/execlsp.ini;
-      };
-    };
-  };
+}: {
 	programs = {
     helix = {
       enable = true;
       extraPackages = with pkgs; [
-        execlsp
 				dockerfile-language-server-nodejs
+        gofumpt
 				gopls
 				lua-language-server
         nil
@@ -72,10 +63,14 @@ in {
           };
           normal =  {
             esc = ["collapse_selection" "keep_primary_selection"];
+              C-r = {
+                p = ":run-shell-command zellij run -f -- git pull";
+                o = ":run-shell-command zellij run -fc -- open_project_file";
+                C-r = ":lsp-restart";
+              };
             space = {
               C-w = ":write!";
               C-x = ":write-quit-all!";
-              C-R = ":lsp-restart";
             };
             C-e = [":lsp-workspace-command"];
           };
@@ -83,7 +78,7 @@ in {
       };
       languages = {
         language = [
-          { name = "go"; auto-format = true; language-servers = [ "execlspgo" "gopls" ]; formatter = { command = "goimports";};}
+          { name = "go"; auto-format = true; language-servers = [ "gopls" ]; formatter = { command = "goimports";};}
           { name = "html"; auto-format = true; language-servers = ["html-languageserver"];}
           { name = "css"; auto-format = true; language-servers = ["css-languageserver"];}
           { name = "scss"; auto-format = true; language-servers = ["css-languageserver"];}
@@ -93,23 +88,24 @@ in {
           { name = "tsx"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
           { name = "svelte"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
           { name = "c"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "markdown"; language-servers = [ "execlspnotes" "zk" ]; indent = { tab-width = 2; unit = " ";}; }
+          { name = "markdown"; language-servers = [ "zk" ]; indent = { tab-width = 2; unit = " ";}; }
         ];
         language-server = {
           zk = {
             command = "${pkgs.zk}/bin/zk";
             args = ["lsp" "--notebook-dir" "/home/karolispabijanskas/notes" "--no-input"];
           };
-          execlspgo = {
-            command = "${execlsp}/bin/exec-lsp";
-            args = ["-presets=go"];
-          };
-          execlspnotes = {
-            command = "${execlsp}/bin/exec-lsp";
-            args = ["-presets=notes"];
-          };
           html-languageserver = {
             command = "${pkgs.nodePackages.vscode-html-languageserver-bin}/bin/html-languageserver";
+          };
+          gopls = {
+            config = {
+              "formatting.gofumpt" = true;
+              "ui.diagnostic.staticcheck" = true;
+              "ui.diagnostic.vulncheck" = "Imports";
+              "ui.diagnostic.analyses" = {"shadow" = false; "useany" = true; "unusedvariable" = true;};
+              "build.templateExtensions" = ["gotmpl" "tmpl"];
+            };
           };
         };
       };
