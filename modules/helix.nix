@@ -1,23 +1,22 @@
-{
-  pkgs,
-  ...
-}: {
-	programs = {
+{ pkgs, ... }: {
+  programs = {
     helix = {
       enable = true;
       extraPackages = with pkgs; [
-				dockerfile-language-server-nodejs
+        dockerfile-language-server-nodejs
         gofumpt
-				gopls
-				lua-language-server
+        goimports-reviser
+        gopls
+        lua-language-server
         nil
-				nodePackages.bash-language-server
-				nodePackages.vscode-json-languageserver
+        nixfmt
+        nodePackages.bash-language-server
+        nodePackages.vscode-json-languageserver
         nodePackages.svelte-language-server
         nodePackages.typescript-language-server
-        nodePackages.vscode-html-languageserver-bin 
-				rust-analyzer
-				yaml-language-server
+        nodePackages.vscode-html-languageserver-bin
+        rust-analyzer
+        yaml-language-server
         zk
       ];
       defaultEditor = true;
@@ -33,8 +32,25 @@
           completion-trigger-len = 1;
           bufferline = "multiple";
           statusline = {
-            left = ["mode" "separator" "version-control" "separator" "spinner" "file-name"];
-            right = ["diagnostics" "separator" "workspace-diagnostics" "separator" "selections" "separator" "file-type" "position-percentage" "position" ];
+            left = [
+              "mode"
+              "separator"
+              "version-control"
+              "separator"
+              "spinner"
+              "file-name"
+            ];
+            right = [
+              "diagnostics"
+              "separator"
+              "workspace-diagnostics"
+              "separator"
+              "selections"
+              "separator"
+              "file-type"
+              "position-percentage"
+              "position"
+            ];
             mode.normal = "NORMAL";
             mode.insert = "INSERT";
             mode.select = "SELECT";
@@ -48,63 +64,140 @@
             hidden = false;
             git-ignore = false;
           };
-          lsp = {
-            display-inlay-hints = true;
-          };
-          soft-wrap = {
-            enable = true;
-          };
+          lsp = { display-inlay-hints = true; };
+          soft-wrap = { enable = true; };
         };
         keys = {
-          insert = {
-            j = {
-              k = "normal_mode";
+          insert = { j = { k = "normal_mode"; }; };
+          normal = {
+            esc = [ "collapse_selection" "keep_primary_selection" ];
+            C-r = {
+              p = ":run-shell-command zellij run -f -- git pull";
+              o = ":run-shell-command zellij run -fc -- open_project_file";
+              C-r = ":lsp-restart";
             };
-          };
-          normal =  {
-            esc = ["collapse_selection" "keep_primary_selection"];
-              C-r = {
-                p = ":run-shell-command zellij run -f -- git pull";
-                o = ":run-shell-command zellij run -fc -- open_project_file";
-                C-r = ":lsp-restart";
-              };
             space = {
               C-w = ":write!";
               C-x = ":write-quit-all!";
             };
-            C-e = [":lsp-workspace-command"];
+            C-e = [ ":lsp-workspace-command" ];
           };
         };
       };
       languages = {
         language = [
-          { name = "go"; auto-format = true; language-servers = [ "gopls" ]; formatter = { command = "goimports";};}
-          { name = "html"; auto-format = true; language-servers = ["html-languageserver"];}
-          { name = "css"; auto-format = true; language-servers = ["css-languageserver"];}
-          { name = "scss"; auto-format = true; language-servers = ["css-languageserver"];}
-          { name = "javascript"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "typescript"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "jsx"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "tsx"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "svelte"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "c"; auto-format = true; indent = { tab-width = 4; unit = " ";};}
-          { name = "markdown"; language-servers = [ "zk" ]; indent = { tab-width = 2; unit = " ";}; }
+          {
+            name = "go";
+            auto-format = true;
+            language-servers = [ "gopls" ];
+            formatter = {
+              command = "bash";
+              args =
+                [ "-c" "goimports|goimports-reviser -format |gofumpt -extra" ];
+            };
+          }
+          {
+            name = "nix";
+            auto-format = true;
+            formatter = { command = "nixfmt"; };
+          }
+          {
+            name = "html";
+            auto-format = true;
+            language-servers = [ "html-languageserver" ];
+          }
+          {
+            name = "css";
+            auto-format = true;
+            language-servers = [ "css-languageserver" ];
+          }
+          {
+            name = "scss";
+            auto-format = true;
+            language-servers = [ "css-languageserver" ];
+          }
+          {
+            name = "javascript";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "typescript";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "jsx";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "tsx";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "svelte";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "c";
+            auto-format = true;
+            indent = {
+              tab-width = 4;
+              unit = " ";
+            };
+          }
+          {
+            name = "markdown";
+            language-servers = [ "zk" ];
+            indent = {
+              tab-width = 2;
+              unit = " ";
+            };
+          }
         ];
         language-server = {
           zk = {
             command = "${pkgs.zk}/bin/zk";
-            args = ["lsp" "--notebook-dir" "/home/karolispabijanskas/notes" "--no-input"];
+            args = [
+              "lsp"
+              "--notebook-dir"
+              "/home/karolispabijanskas/notes"
+              "--no-input"
+            ];
           };
           html-languageserver = {
-            command = "${pkgs.nodePackages.vscode-html-languageserver-bin}/bin/html-languageserver";
+            command =
+              "${pkgs.nodePackages.vscode-html-languageserver-bin}/bin/html-languageserver";
           };
           gopls = {
             config = {
               "formatting.gofumpt" = true;
               "ui.diagnostic.staticcheck" = true;
               "ui.diagnostic.vulncheck" = "Imports";
-              "ui.diagnostic.analyses" = {"shadow" = false; "useany" = true; "unusedvariable" = true;};
-              "build.templateExtensions" = ["gotmpl" "tmpl"];
+              "ui.diagnostic.analyses" = {
+                "shadow" = false;
+                "useany" = true;
+                "unusedvariable" = true;
+              };
+              "build.templateExtensions" = [ "gotmpl" "tmpl" ];
             };
           };
         };

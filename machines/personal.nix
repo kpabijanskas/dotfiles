@@ -1,12 +1,8 @@
 # This is actually a macmini, but my dev env is a Fedora box in OrbStack
-{
-  inputs,
-  system,
-  ...
-}: {
+{ inputs, system, ... }: {
   config = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = inputs.nixpkgs.legacyPackages."${system}";
-    extraSpecialArgs = {inherit inputs system;};
+    extraSpecialArgs = { inherit inputs system; };
     modules = [
       {
         home = {

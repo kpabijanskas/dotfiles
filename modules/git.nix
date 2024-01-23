@@ -1,14 +1,4 @@
-{
-	...
-}: {
-  home = {
-	  file = {
-		  ".gitconfig" = {
-				source = ../generated/gitconfig;
-			};
-		};
-	};
-	programs = {
-		git.enable = true;
-	};
+{ ... }: {
+  home = { file = { ".gitconfig" = { source = ../generated/gitconfig; }; }; };
+  programs = { git.enable = true; };
 }

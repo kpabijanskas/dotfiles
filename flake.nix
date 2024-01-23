@@ -8,15 +8,15 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, ... }: {
+  outputs = inputs@{ self, ... }: {
     homeConfigurations = {
       "NS-PF43XW2B" = (import ./machines/work.nix {
         inherit inputs;
-        system="x86_64-linux";
+        system = "x86_64-linux";
       }).config;
       "fedora" = (import ./machines/personal.nix {
         inherit inputs;
-        system="aarch64-linux";
+        system = "aarch64-linux";
       }).config;
     };
   };

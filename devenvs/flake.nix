@@ -4,10 +4,9 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }: 
+  outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages."${system}";
+      let pkgs = nixpkgs.legacyPackages."${system}";
       in {
         devShells = {
           "go" = pkgs.mkShell {
@@ -24,6 +23,5 @@
             ];
           };
         };
-      }
-    ); 
+      });
 }

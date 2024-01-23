@@ -1,11 +1,7 @@
-{
-  inputs,
-  system,
-  ...
-}: {
-   config = inputs.home-manager.lib.homeManagerConfiguration {
+{ inputs, system, ... }: {
+  config = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = inputs.nixpkgs.legacyPackages."${system}";
-    extraSpecialArgs = {inherit inputs ;};
+    extraSpecialArgs = { inherit inputs; };
     modules = [
       {
         home = {

@@ -1,11 +1,6 @@
-{
-  pkgs,
-  ...
-}: {
+{ pkgs, ... }: {
   home = {
-    packages = with pkgs; [
-      exercism
-    ];
+    packages = with pkgs; [ exercism ];
     file = {
       ".config/exercism/user.json" = {
         source = ../generated/exercism_user.json;

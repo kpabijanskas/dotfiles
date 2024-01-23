@@ -76,12 +76,31 @@ in {
         last_history_item.body = ''
           echo $history[1]
         '';
-        zellij = ''
+        zellij.body = ''
           if count $argv > /dev/null
             ${pkgs.zellij}/bin/zellij $argv
           else
             ${pkgs.zellij}/bin/zellij a --create
           end
+        '';
+        project = ''
+          set DIRECTORIES ~/repos
+          set -a DIRECTORIES ~/workspaces
+
+          for dir in $DIRECTORIES 
+            set repo_list $(fd '\.git$' $dir --prune -utd | sed 's/\/\.git\/$//g'|awk '{ if (NR == 1 || !index($0, prev)) { print; prev = $0 } }')
+            for repo in $repo_list
+              set -a REPOS $repo
+            end
+          end
+
+
+          set TARGET $(echo $REPOS | tr ' ' '\n' |fzf --preview 'ls {}')
+          if test -z $TARGET
+            return
+          end
+
+          cd $TARGET
         '';
       };
 

@@ -1,21 +1,10 @@
-{
-  pkgs, 
-  ...
-}: let
-  dategenforzk =  pkgs.callPackage ../pkgs/dategenforzk.nix {  };
+{ pkgs, ... }:
+let dategenforzk = pkgs.callPackage ../pkgs/dategenforzk.nix { };
 in {
   home = {
-    packages = with pkgs; [
-      zk
-      git-sync
-      marksman
-      yq-go
-      dategenforzk
-    ];
+    packages = with pkgs; [ zk git-sync marksman yq-go dategenforzk ];
     file = {
-      ".config/zk/config.toml" = {
-        source = ../files/zk_config.toml;
-      };
+      ".config/zk/config.toml" = { source = ../files/zk_config.toml; };
       ".config/zk/templates/daily.md" = {
         source = ../files/zk_templates_daily.md;
       };
@@ -39,12 +28,5 @@ in {
       };
     };
   };
-  programs = {
-    helix = {
-      extraPackages = with pkgs; [
-        zk
-        marksman
-      ];
-    };
-  };
+  programs = { helix = { extraPackages = with pkgs; [ zk marksman ]; }; };
 }

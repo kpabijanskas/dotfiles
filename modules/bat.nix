@@ -1,13 +1,8 @@
-{
-  pkgs,
-  ...
-}: {
+{ pkgs, ... }: {
   programs = {
     bat = {
       enable = true;
-      config = {
-       theme = "Catppuccin-Latte";
-      };
+      config = { theme = "Catppuccin-Latte"; };
       themes = {
         Catppuccin-Latte = {
           src = pkgs.fetchFromGitHub {

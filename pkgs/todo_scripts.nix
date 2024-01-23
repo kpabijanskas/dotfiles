@@ -1,5 +1,5 @@
 { writeScriptBin }: {
-	 add_project_todo = writeScriptBin "add_project_todo" ''
+  add_project_todo = writeScriptBin "add_project_todo" ''
     #!/bin/fish
 
     set FILE $(mktemp)
