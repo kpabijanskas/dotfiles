@@ -4,6 +4,7 @@
       enable = true;
       extraPackages = with pkgs; [
         dockerfile-language-server-nodejs
+        emmet-ls
         gofumpt
         goimports-reviser
         gopls
@@ -28,6 +29,7 @@
           cursorcolumn = true;
           mouse = false;
           true-color = true;
+          rulers = [ 120 ];
           idle-timeout = 0;
           completion-trigger-len = 1;
           bufferline = "multiple";
@@ -55,6 +57,15 @@
             mode.insert = "INSERT";
             mode.select = "SELECT";
           };
+          auto-pairs = {
+            "(" = ")";
+            "{" = "}";
+            "[" = "]";
+            "'" = "'";
+            "\"" = ''"'';
+            "`" = "`";
+            "<" = ">";
+          };
           cursor-shape = {
             insert = "bar";
             normal = "block";
@@ -66,6 +77,11 @@
           };
           lsp = { display-inlay-hints = true; };
           soft-wrap = { enable = true; };
+          indent-guides = {
+            render = true;
+            character = "╎";
+            skip-levels = 1;
+          };
         };
         keys = {
           insert = { j = { k = "normal_mode"; }; };
@@ -95,6 +111,17 @@
               args =
                 [ "-c" "goimports|goimports-reviser -format |gofumpt -extra" ];
             };
+          }
+          {
+            name = "gotmpl";
+            auto-format = true;
+            # language-servers = [ "gopls" ];
+            # formatter = {
+            #   command = "bash";
+            #   args =
+            #     [ "-c" "goimports|goimports-reviser -format |gofumpt -extra" ];
+            # };
+            language-servers = [ "gopls" "emmet-ls" ];
           }
           {
             name = "nix";
@@ -182,6 +209,10 @@
               "/home/karolispabijanskas/notes"
               "--no-input"
             ];
+          };
+          emmet-ls = {
+            command = "${pkgs.emmet-ls}/bin/emmet-ls";
+            args = [ "--stdio" ];
           };
           html-languageserver = {
             command =

@@ -1,17 +1,13 @@
-{
-  pkgs,
-  ...
-}:
-let
-  isLinux = pkgs.stdenv.isLinux;
+{ pkgs, ... }:
+let isLinux = pkgs.stdenv.isLinux;
 in {
   programs = {
     fish = {
       enable = true;
 
       interactiveShellInit = ''
-      set -gx PAGER most
-      set -gx PATH ~/bin $PATH
+        set -gx PAGER most
+        set -gx PATH ~/bin $PATH
       '';
 
       shellAliases = {
@@ -29,7 +25,8 @@ in {
       } // (if isLinux then {
         pbcopy = "wl-copy";
         pbpaste = "wl-paste";
-      } else {});
+      } else
+        { });
 
       shellInit = ''
         abbr -a !! --position anywhere --function last_history_item
@@ -83,7 +80,7 @@ in {
             ${pkgs.zellij}/bin/zellij a --create
           end
         '';
-        project = ''
+        project.body = ''
           set DIRECTORIES ~/repos
           set -a DIRECTORIES ~/workspaces
 
@@ -95,13 +92,14 @@ in {
           end
 
 
-          set TARGET $(echo $REPOS | tr ' ' '\n' |fzf --preview 'ls {}')
+          set TARGET $(echo $REPOS | tr ' ' '\n' |fzf)
           if test -z $TARGET
             return
           end
 
           cd $TARGET
         '';
+        pro.body = "project";
       };
 
     };

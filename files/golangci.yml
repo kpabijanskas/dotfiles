@@ -110,6 +110,11 @@ linters-settings:
       - prometheus.ExponentialBucketsRange
       - prometheus.LinearBuckets
 
+  gomoddirectives:
+    replace-local: true
+    replace-allow-list:
+      - bucket.digitalarsenal.net/research-and-innovate/the-room-of-requirement/restricted-thingamajig/libminguz-go
+
   gomodguard:
     blocked:
       # List of blocked modules.

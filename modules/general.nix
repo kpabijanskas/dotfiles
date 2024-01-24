@@ -21,6 +21,9 @@ in {
         consul
         ejson
         fd
+        gotools
+        goimports-reviser
+        gofumpt
         gawk
         gdb
         gnumake
