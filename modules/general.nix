@@ -6,6 +6,23 @@ in {
   home = {
     packages = with pkgs;
       with scripts; [
+        cloc
+        delve
+        python311Packages.python-lsp-server
+        lldb
+        just
+        upx
+        sqlite
+        socat
+        inetutils
+        iftop
+        curlFull
+        direnv
+        python311Packages.ipython
+        jq
+        nmap
+        pipenv
+
         add_project_todo
         project_todos
         open_project_file
