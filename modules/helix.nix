@@ -195,7 +195,7 @@
             name = "markdown";
             language-servers = [ "zk" ];
             indent = {
-              tab-width = 2;
+              tab-width = 4;
               unit = " ";
             };
           }

@@ -21,6 +21,7 @@
       ../modules/fzf.nix
       ../modules/git.nix
       ../modules/kakoune.nix
+      ../modules/wezterm.nix
     ];
   };
 }
