@@ -10,6 +10,10 @@
 
   outputs = inputs@{ self, ... }: {
     homeConfigurations = {
+      "NS-PF43XW2B" = (import ./machines/work.nix {
+        inherit inputs;
+        system = "x86_64-linux";
+      }).config;
       "NS-PF43XW2B.lan" = (import ./machines/work.nix {
         inherit inputs;
         system = "x86_64-linux";
