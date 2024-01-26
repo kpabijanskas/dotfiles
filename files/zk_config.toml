@@ -118,6 +118,12 @@ last = 'zk edit --limit 1 --sort modified- (string join " " $argv)'
 conf = '$EDITOR ~/.config/zk/config.toml'
 sync = 'git-sync -ns'
 rm = 'rm $argv.md || rm $argv'
+# All active projects
+pa = 'zk edit --tag project -t active --interactive'
+# All parked projects
+pap = 'zk edit --tag project -t parked --interactive'
+# All archived projects
+paa = 'zk edit --tag project -t archived --interactive'
 # Work active projects
 pw = 'zk edit --tag project --tag work -t active --interactive'
 # Personal active projects

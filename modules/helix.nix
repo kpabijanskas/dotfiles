@@ -198,6 +198,7 @@
               tab-width = 4;
               unit = " ";
             };
+            rulers = [ ];
           }
         ];
         language-server = {
