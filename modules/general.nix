@@ -23,6 +23,8 @@ in {
         nmap
         pipenv
 
+        go
+
         add_project_todo
         project_todos
         open_project_file
