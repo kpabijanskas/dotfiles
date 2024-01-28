@@ -1,4 +1,4 @@
-pane_frames false
+pane_frames true
 scroll_buffer_size 100000
 session_serialization false
 theme "catppuccin-latte"

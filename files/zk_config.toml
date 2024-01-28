@@ -13,11 +13,6 @@ id-case = "lower"
 
 [extra]
 
-[group.inbox]
-paths = ["inbox"]
-[group.inbox.note]
-filename = "{{title}}"
-
 [group.daily]
 paths = ["journal/daily"]
 [group.daily.note]
@@ -62,8 +57,8 @@ dead-link = "error"
 [filter]
 
 [alias]
-# Add an item to inbox
-a = 'zk new --title=(string join " " $argv) inbox'
+# Open inbox
+i = 'zk edit inbox'
 # Add an item to the main group 
 n = 'zk new --title=(string join " " $argv)'
 # New Work Project
