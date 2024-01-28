@@ -81,8 +81,6 @@ in {
         typescript
         util-linux
         vagrant
-        vault
-        wireguard-go
         wireguard-tools
         yarn
         zip
