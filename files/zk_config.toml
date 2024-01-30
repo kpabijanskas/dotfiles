@@ -87,7 +87,7 @@ t = """
 # Edit weekly notes
 w = """
   set DATE $argv
-  test "$DATE" != "" || set DATE $(date "+%Y-W%U")
+  test "$DATE" != "" || set DATE $(date "+%Y-W%V")
   echo $DATE|grep -Eq '^[0-9]{4}-W[0-9]{2}$' || begin; echo "bad date format"; exit 1; end
   set VARS $(dategenforzk -txt $DATE)
   zk new --no-input --title=$DATE --extra=$VARS journal/weekly
