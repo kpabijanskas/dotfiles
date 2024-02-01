@@ -80,7 +80,8 @@ in {
             ${pkgs.zellij}/bin/zellij a --create
           end
         '';
-        project.body = ''
+        pro.body = ''
+          set SEARCH (string join " " $argv)
           set DIRECTORIES ~/repos
           set -a DIRECTORIES ~/workspaces
 
@@ -92,14 +93,13 @@ in {
           end
 
 
-          set TARGET $(echo $REPOS | tr ' ' '\n' |fzf)
+          set TARGET $(echo $REPOS | tr ' ' '\n' |fzf --query=$SEARCH)
           if test -z $TARGET
             return
           end
 
           cd $TARGET
         '';
-        pro.body = "project";
       };
 
     };

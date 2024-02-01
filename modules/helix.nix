@@ -92,6 +92,9 @@
               o = ":run-shell-command zellij run -fc -- open_project_file";
               C-r = ":lsp-restart";
             };
+            C-s = "no_op";
+            C-d =
+              "save_selection"; # C-s is overriden by zellij so move it to C-d
             space = {
               C-w = ":write!";
               C-x = ":write-quit-all!";
