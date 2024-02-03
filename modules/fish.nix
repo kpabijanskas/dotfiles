@@ -15,7 +15,7 @@ in {
         vim = "hx";
         nvim = "hx";
         e = "hx";
-        dnf-up = "sudo dnf update -y";
+        dnf-up = "sudo dnf update -y --refresh";
         flatpak-up = "sudo flatpak update -y";
         flatpak-clear = "sudo flatpak uninstall --unused -y";
         ".." = "cd ..";
