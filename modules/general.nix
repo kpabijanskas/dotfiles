@@ -1,11 +1,9 @@
 { pkgs, ... }:
 let
   ejson-templater = pkgs.callPackage ../pkgs/ejson-templater.nix { };
-  scripts = pkgs.callPackage ../pkgs/todo_scripts.nix { };
 in {
   home = {
-    packages = with pkgs;
-      with scripts; [
+    packages = with pkgs; [
         cloc
         delve
         python311Packages.python-lsp-server
@@ -15,6 +13,7 @@ in {
         sqlite
         socat
         inetutils
+        gomobile
         iftop
         curlFull
         direnv
@@ -24,10 +23,14 @@ in {
         pipenv
 
         go
+        libgcc
+        # gcc
+        llvm
+        clang
+        libunwind
+        liblogging
+        glib
 
-        add_project_todo
-        project_todos
-        open_project_file
         ejson-templater
         arping
         bpftools
@@ -35,7 +38,6 @@ in {
         cscope
         ctags
         docker
-        clang
         cmake
         consul
         ejson
@@ -94,6 +96,7 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
+    android_sdk.accept_license = true;
   };
 
   programs = {

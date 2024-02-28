@@ -8,13 +8,14 @@ in {
       interactiveShellInit = ''
         set -gx PAGER most
         set -gx PATH ~/bin $PATH
+        set -gx ZK_NOTEBOOK_DIR ~/notes
       '';
 
       shellAliases = {
-        vi = "hx";
-        vim = "hx";
-        nvim = "hx";
-        e = "hx";
+        vi = "nvim";
+        vim = "nvim";
+        hx = "nvim";
+        e = "nvim";
         dnf-up = "sudo dnf update -y --refresh";
         flatpak-up = "sudo flatpak update -y";
         flatpak-clear = "sudo flatpak uninstall --unused -y";

@@ -1,8 +1,0 @@
-Inbox = not:@ not:+
-Work = @work
-WorkDue = @work duebefore:tomorrow
-Personal = @personal
-PersonalDue = @personal duebefore:tomorrow
-Pirkiniai = @pirkiniai
-Done = done:yes
-Hidden = hidden:yes

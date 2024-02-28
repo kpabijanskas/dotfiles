@@ -10,18 +10,17 @@
         };
       }
       ../modules/general.nix
-      ../modules/zk.nix
-      ../modules/todo.nix
       ../modules/zellij.nix
-      ../modules/helix.nix
       ../modules/atuin.nix
       ../modules/bat.nix
       ../modules/direnv.nix
       ../modules/fish.nix
       ../modules/fzf.nix
       ../modules/git.nix
+      ../modules/git-work.nix
       ../modules/kakoune.nix
       ../modules/wezterm.nix
+      ../modules/nvim.nix
     ];
   };
 }

@@ -11,17 +11,15 @@
         };
       }
       ../modules/general.nix
-      ../modules/zk.nix
-      ../modules/todo.nix
       ../modules/exercism.nix
       ../modules/zellij.nix
-      ../modules/helix.nix
       ../modules/atuin.nix
       ../modules/bat.nix
       ../modules/direnv.nix
       ../modules/fish.nix
       ../modules/fzf.nix
       ../modules/git.nix
+      ../modules/nvim.nix
     ];
   };
 }
