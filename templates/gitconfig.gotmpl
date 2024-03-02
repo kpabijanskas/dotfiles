@@ -18,5 +18,9 @@
 [http "https://{{ .work.git.domain }}"]
      proxy = {{ .work.git.proxy }}
 
+[url "https://{{ .personal.git.httpscreds }}@{{ .personal.git.domain }}/"]
+     insteadOf = "https://{{ .personal.git.domain }}/"
+     insteadOf = "git@{{ .personal.git.domain }}:"
+
 [pull]
 	rebase = true
