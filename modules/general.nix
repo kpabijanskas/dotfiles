@@ -113,5 +113,6 @@ in {
     };
   };
 
+  news.display = "silent";
   home.stateVersion = "24.05";
 }

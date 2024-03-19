@@ -44,7 +44,7 @@ in {
         '';
         nix-up.body = ''
           set cwd $PWD
-          cd ~/repos/github.com/kpabijanskas/dotfiles
+          cd ~/repos/gitea.l.pabijanskas.lt/kpabijanskas/dotfiles
           nix-channel --update
           nix flake update
           rm ./generated/*
