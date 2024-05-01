@@ -1,0 +1,28 @@
+layout {
+  pane size=1 borderless=true {
+    plugin location="file:${zellij_plugins.zjstatus}/plugins/zjstatus.wasm" {
+      format_left  "#[bg=#CCD0DA]{mode}#[bg=#CCD0DA] | {tabs}"
+      format_right "#[fg=#ACB0BE,bg=#CCD0DA,bold]{session}"
+      format_space "#[bg=#CCD0DA]"
+
+      mode_normal        "#[fg=#5C5F77,bg=#CCD0DA] {name} "
+      mode_locked        "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_resize        "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_pane          "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_tab           "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_scroll        "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_enter_search  "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_search        "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_rename_tab    "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_rename_pane   "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_session       "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_move          "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_prompt        "#[fg=#E64553,bg=#CCD0DA] {name} "
+      mode_tmux          "#[fg=#40A02B,bg=#CCD0DA] {name} "
+
+      tab_normal   "#[fg=#6C6F85,bg=#CCD0DA] {name} "
+      tab_active   "#[fg=#40a02b,bg=#CCD0DA,bold,italic] {name} "
+    }
+  }
+  pane borderless=true
+}

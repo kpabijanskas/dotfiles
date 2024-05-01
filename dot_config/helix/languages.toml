@@ -1,0 +1,61 @@
+[[language]]
+name = "go"
+auto-format = true
+formatter = { command = "goimports" }
+
+[[language]]
+name = "html"
+auto-format = true
+language-servers = [ "html-languageserver" ]
+
+[[language]]
+name = "css"
+auto-format = true
+language-servers = [ "css-languageserver" ]
+
+[[language]]
+name = "scss"
+auto-format = true
+language-servers = [ "css-languageserver" ]
+
+[[language]]
+name = 'javascript'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = 'typescript'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = 'jsx'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = 'tsx'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = 'svelte'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = 'c'
+auto-format = true
+indent = { tab-width = 4, unit = " " }
+
+[[language]]
+name = "markdown"
+language-servers = [ "zk", "marksman" ]
+indent = { tab-width = 2, unit = " " }
+
+[language-server.zk]
+command = "zk"
+args = ["lsp"]
+
+[language-server.marksman]
+command = "marksman"

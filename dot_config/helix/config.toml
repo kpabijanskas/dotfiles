@@ -1,0 +1,39 @@
+theme = "catppuccin_latte"
+
+[editor]
+line-number = "relative"
+cursorline = true
+cursorcolumn = true
+mouse = false
+true-color = true
+idle-timeout = 0
+completion-trigger-len = 1
+
+[editor.statusline]
+left = ["mode", "separator", "version-control", "separator", "spinner", "file-name"]
+right = ["diagnostics", "separator", "workspace-diagnostics", "separator", "selections", "separator", "file-type", "position-percentage", "position" ]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.soft-wrap]
+enable = true
+
+[keys.insert]
+j = { k = "normal_mode" }
+
+[keys.normal."C-e"]
+r = ":run-shell-command project_run"
+t = ":run-shell-command project_test"
+b = ":run-shell-command project_build"

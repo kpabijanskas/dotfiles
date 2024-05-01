@@ -1,0 +1,159 @@
+source ~/.zplug/init.zsh
+autoload -U promptinit; promptinit
+
+TERM=xterm
+
+
+typeset -U path cdpath fpath manpath
+
+
+
+for profile in ${(z)NIX_PROFILES}; do
+  fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
+done
+
+
+# Use emacs keymap as the default.
+bindkey -e
+
+
+SOLARIZED_THEME="light"
+
+
+zplug "plugins/docker", from:oh-my-zsh
+
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "mafredri/zsh-async", from:github
+
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+
+
+
+if ! zplug check; then
+  zplug install
+fi
+
+zplug load
+
+
+
+
+# Oh-My-Zsh/Prezto calls compinit during initialization,
+# calling it twice causes slight start up slowdown
+# as all $fpath entries will be traversed again.
+autoload -U compinit && compinit
+
+
+
+
+
+
+
+
+
+
+# History options should be set in .zshrc and after oh-my-zsh sourcing.
+HISTSIZE="100000"
+SAVEHIST="100000"
+HISTFILE="$HOME/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+unsetopt HIST_EXPIRE_DUPS_FIRST
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt autocd
+
+function rebranch() {
+  git stash
+  git checkout master
+  git pull
+  git branch -D $1
+  git checkout -b $1
+  git branch -u origin/$1
+}
+
+function rebranch2() {
+  git stash
+  git checkout main
+  git pull
+  git branch -D $1
+  git checkout -b $1
+  git branch -u origin/$1
+}
+
+function check_cert_expiry() {
+  echo "Q" | openssl s_client -connect $1 2>/dev/null | openssl x509 -noout -dates
+}
+
+function j() {
+  SRV=$1
+  shift
+  echo -e "Connecting to $SRV via JumpBox j1.digitalarsenal.net\n"
+  ssh -A -J kpabijanskas@j1.digitalarsenal.net root@$SRV $@
+}
+
+function j2() {
+  SRV=$1
+  shift
+  echo -e "Connecting to $SRV via JumpBox j2.digitalarsenal.net\n"
+  ssh -A -J kpabijanskas@j2.digitalarsenal.net root@$SRV $@
+}
+export GPG_TTY=$(tty)
+
+zstyle :prompt:pure:git:stash show yes
+
+
+# Aliases
+alias digs='dig +short'
+alias justfixit='git add -A . && git commit -am'\''fix'\''  && git push'
+alias ping='ping -c 100000'
+alias vimdiff='nvim -d'
+
+# Global Aliases
+alias -g gp='|grep -i'
+alias -g jt='|python -m json.tool'
+
+# Named Directory Hashes
+
+GOPATH=/Users/karolispabijanskas/go
+GO111MODULE="on"
+export GOBIN="$GOPATH/bin"
+export PATH=~/bin:/usr/local/bin:$GOBIN:/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:~/.npm-global/bin:$PATH
+alias pepper="$HOME/Library/Python/3.10/bin/pepper"
+
+sshrefresh() {
+  echo > /tmp/servers_new.txt
+  for cluster in `tsh clusters |grep -Ev '^(Cluster|----)'|awk '{ print $1}'`
+  do
+    tsh ls --cluster $cluster -f names >> /tmp/servers_new.txt
+  done
+  if [ `cat /tmp/servers_new.txt|wc -l` -gt 1000 ];
+  then
+    mv /tmp/servers_new.txt /tmp/servers.txt
+  fi
+}
+
+sshi(){
+    username="karolis"
+    target=$(cat /tmp/servers.txt \
+      | column -t \
+      | fzf +s -e --layout=reverse --inline-info \
+      | awk '{print $1}')
+      tsh ssh "${username}@${target}"
+}
+
+gen_wg_pair() {
+  priv=`wg genkey`
+  pub=`echo $priv|wg pubkey`
+  echo "Private: $priv"
+  echo "Public: $pub"
+}
+alias vim=nvim
+alias lvim="GOOS=linux nvim"

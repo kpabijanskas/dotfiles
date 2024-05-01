@@ -1,0 +1,28 @@
+[push]
+    autoSetupRemote = true
+
+[user]
+    name = Karolis Pabijanskas
+    email = {{ (rbw "personal_email" "--folder" "Chezmoi").data.username}}
+
+{{ if eq .chezmoi.os "linux" }}
+[includeIf "gitdir:~/repos/{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"]
+    path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/workspaces/"]
+    path = ~/.gitconfig-work
+
+[url "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_httpscreds.value }}@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"]
+    insteadOf = "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"
+    insteadOf = "git@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}:"
+
+[http "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}"]
+    proxy = {{ (rbwFields "work" "--folder" "Chezmoi").git_proxy.value }}
+{{ end }}
+
+[url "https://{{ (rbwFields "Gitea admin" "--folder" "Machines on Mac Mini").user.value }}:{{ (rbwFields "Gitea admin" "--folder" "Machines on Mac Mini").token.value }}@{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"]
+    insteadOf = "https://{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"
+    insteadOf = "git@{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}:"
+
+[pull]
+    rebase = true

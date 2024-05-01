@@ -1,0 +1,241 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set which-key
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+set relativenumber
+
+""" Which hey timeout
+set notimeout
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" Which Key -------------------------------
+let g:WhichKey_DefaultDelay = 0
+
+""" Mappings --------------------------------
+
+" ---> <leader>
+nmap <leader>a <Action>(Refactorings.QuickListPopupAction)
+let g:WhichKeyDesc_leader_a = "<leader>a Refactor This"
+
+nmap <leader>b <Action>(ShowBookmarks)
+let g:WhichKeyDesc_leader_b = "<leader>b Show Bookmarks"
+
+nmap <leader>c <Action>(ReformatCode)
+let g:WhichKeyDesc_leader_c = "<leader>c Reformat Code"
+
+nmap <leader>d <Action>(ChooseDebugConfiguration)
+let g:WhichKeyDesc_leader_d = "<leader>d Run Debug..."
+
+nmap <leader>e <Action>(GotoTest)
+let g:WhichKeyDesc_leader_e = "<leader>e Go To Test..."
+
+nmap <leader>f <Action>(GotoFile)
+let g:WhichKeyDesc_leader_f = "<leader>f Go To File..."
+
+nmap <leader>h <Action>(ShowUsages)
+let g:WhichKeyDesc_leader_h = "<leader>h Show Usages"
+
+nmap <leader>i <Action>(ShowIntentionActions)
+let g:WhichKeyDesc_leader_i = "<leader>i Show Intention Actions"
+
+nmap <leader>j <Action>(InspectCode)
+let g:WhichKeyDesc_leader_j = "<leader>j Inspect Code"
+
+nmap <leader>J <Action>(CodeCleanup)
+let g:WhichKeyDesc_leader_J = "<leader>J Code Cleanup"
+
+nmap <leader>k <Action>(QuickJavaDoc)
+let g:WhichKeyDesc_leader_k = "<leader>k Show Docs for item under cursor"
+
+nmap <leader>m <Action>(Generate)
+let g:WhichKeyDesc_leader_m = "<leader>m Generate"
+
+nmap <leader>n <Action>(ToggleBookmark)
+let g:WhichKeyDesc_leader_n = "<leader>n Toggle Bookmark"
+
+nmap <leader>N <Action>(EditBookmark)
+let g:WhichKeyDesc_leader_N = "<leader>N Rename Bookmark"
+
+nmap <leader>o <Action>(InsertLiveTempalte)
+let g:WhichKeyDesc_leader_o = "<leader>o Insert Live Template"
+
+nmap <leader>q <Action>(FileStructurePopup)
+let g:WhichKeyDesc_leader_q = "<leader>q File Structure"
+
+nmap <leader>r <Action>(RenameElement)
+let g:WhichKeyDesc_leader_r = "<leader>r Rename Symbol"
+
+nmap <leader>t <Action>(QuickTypeDefinition)
+let g:WhichKeyDesc_leader_t = "<leader>t Show Type Definition"
+
+nmap <leader>u <Action>(ChooseRunConfiguration)
+let g:WhichKeyDesc_leader_u = "<leader>u Run..."
+
+nmap <leader>v <Action>(SurroundWith)
+let g:WhichKeyDesc_leader_v = "<leader>v Wrap"
+
+nmap <leader>V <Action>(Unwrap)
+let g:WhichKeyDesc_leader_V = "<leader>V Unwrap"
+
+nmap <leader>x <Action>(ToggleLineBreakpoint)
+let g:WhichKeyDesc_leader_x = "<leader>x Toggle Breakpoint"
+
+" ---> <leader>w
+let g:WhichKeyDesc_leader_w = "<leader>w Windows"
+
+nmap <leader>! <Action>(ActivateTerminalToolWindow)
+let g:WhichKeyDesc_leader_exclamation = "<leader>! Show Terminal"
+
+nmap <leader>wa <Action>(ActivateDatabaseToolWindow)
+let g:WhichKeyDesc_leader_w_a = "<leader>wa Show Database"
+
+nmap <leader>wb <Action>(ActivateBookmarksToolWindow)
+let g:WhichKeyDesc_leader_w_b = "<leader>wb Show Bookmarks"
+
+nmap <leader>wc <Action>(ActivateCoverageToolWindow)
+let g:WhichKeyDesc_leader_w_c = "<leader>wc Show Coverage"
+
+nmap <leader>wd <Action>(ActivateDebugToolWindow)
+let g:WhichKeyDesc_leader_w_d = "<leader>wd Show Debug"
+
+nmap <leader>we <Action>(ActivateDeveloperToolsToolWindow)
+let g:WhichKeyDesc_leader_w_e = "<leader>we Show Developer Tools"
+
+nmap <leader>wf <Action>(ActivateFindToolWindow)
+let g:WhichKeyDesc_leader_w_f = "<leader>wf Find"
+
+nmap <leader>wm <Action>(ActivatemakeToolWindow)
+let g:WhichKeyDesc_leader_w_m = "<leader>wm Show Make"
+
+nmap <leader>wp <Action>(ActivateProblemsViewToolWindow)
+let g:WhichKeyDesc_leader_w_p = "<leader>wp Show Problems"
+
+nmap <leader>wr <Action>(ActivateRunToolWindow)
+let g:WhichKeyDesc_leader_w_r = "<leader>wr Show Run"
+
+nmap <leader>ws <Action>(ActivateServicesToolWindow)
+let g:WhichKeyDesc_leader_w_s = "<leader>ws Show Services"
+
+nmap <leader>wt <Action>(ActivateTODOToolWindow)
+let g:WhichKeyDesc_leader_w_t = "<leader>wt Show TODO"
+
+nmap <leader>ww <Action>(ActivateProjectToolWindow)
+let g:WhichKeyDesc_leader_w_w = "<leader>ww Show Project"
+
+nmap <leader>wx <Action>(HideAllWindows)
+let g:WhichKeyDesc_leader_w_x = "<leader>wx Hide All Windows"
+
+" ---> <leader>z
+let g:WhichKeyDesc_leader_z = "<leader>z IdeaVim"
+
+nmap <leader>zr <Action>(IdeaVim.ReloadVimRc.reload)
+let g:WhichKeyDesc_leader_z_r = "<leader>zr Reload vim config"
+
+nmap <leader>zt <Action>(VimFindActionIdAction)
+let g:WhichKeyDesc_leader_z_t = "<leader>zt Toggle Action ID Tracking"
+
+" ---> g
+" defined by default
+let g:WhichKeyDesc_g_d = "gd Go To Declaration"
+
+let g:WhichKeyDesc_g_D = "gD Go To Definition"
+
+namp gi <Action>(GotoImplementation)
+let g:WhichKeyDesc_g_i = "gi Go To Implementation"
+
+nmap gl <Action>(GotoRelated)
+let g:WhichKeyDesc_g_l = "gl Go To Related Symbol"
+
+nmap gs <Action>(EditSource)
+let g:WhichKeyDesc_g_s = "gs Go To Source"
+
+nmap gt <Action>(GotoTypeDeclaration)
+let g:WhichKeyDesc_g_t = "gt Go To Type Declaration"
+
+nmap gy <Action>(GotoSuperMethod)
+let g:WhichKeyDesc_g_y = "gy Go To Super Method"
+
+" ---> <leader>l
+let g:WhichKeyDesc_leader_l = "<leader>l Language-Specific"
+
+nmap <leader>li <Action>(GoImportsFileAction)
+let g:WhichKeyDesc_ledaer_l_i = "<leader>li Go Imports"
+
+nmap <leader>lf <Action>(GoFmtFileAction)
+let g:WhichKeyDesc_ledear_l_f = "<leader>lf Go Format File"
+
+nmap <leader>lg <Action>(GoGenerateFileAction)
+let g:WhichKeyDesc_leader_l_g = "<leader>lg Go Generate"
+
+nmap <leader>lp <Action>(GoFmtProjectAction)
+let g:WhichKeyDesc_leader_l_p = "<leader>lp Go Format Project"
+
+nmap <leader>lv <Action>(GoVetFileAction)
+let g:WhichKeyDesc_leader_l_v = "<leader>lv Go Vet"
+
+" ---> <leader>s
+let g:WhichKeyDesc_leader_s = "Search"
+
+nmap <leader>se <Action>(SearchEverywhere)
+let g:WhichKeyDesc_leader_s_e = "<leader>se Search Everywhere..."
+
+nmap <leader>ss <Action>(GotoSymbol)
+let g:WhichKeyDesc_leader_s_s = "<leader>ss Search Symbol..."
+
+nmap <leader>st <Action>(GotoClass)
+let g:WhichKeyDesc_leader_s_t = "<leader>st Search Types..."
+
+nmap <leader>sx <Action>(TextSearchAction)
+let g:WhichKeyDesc_leader_s_x = "<leader>sx Search Text..."
+
+nmap <leader>su <Action>(GotoUrlAction)
+let g:WhichKeyDesc_leader_s_u = "<leader>su Search Endpoints..."
+
+" ---> ]
+let g:WhichKeyDesc_rightbracket = "Go To Next"
+
+nmap ]d <Action>(GotoNextError)
+let g:WhichKeyDesc_rightbracket_d = "]d Go To Next Error"
+
+nmap ]e <Action<(JumpToNextChange)
+let g:WhichKeyDesc_rightbracket_e = "]e Go To Next Change"
+
+" ---> [
+let g:WhichKeyDesc_rightbracket = "Go To Previous"
+
+map [d <Action>(GotoPreviousError)
+let g:WhichKeyDesc_leftbracket_d = "[d Go to Prev Error"
+
+nmap [e <Action<(JumpToLastChange)
+let g:WhichKeyDesc_rightbracket_e = "]e Go To Prev Change"
+
+" ---> NO PREFIX
+nmap <C-k> <Action>(MoveStatementUp)
+nmap <C-j> <Action>(MoveStatementDown)
+nmap <C-S-k> <Action>(MoveLineUp)
+nmap <C-S-j> <Action>(MoveLineDown)
+
+nmap <up> <nop>
+nmap <down> <nop>
+nmap <left> <nop>
+nmap <right> <nop>

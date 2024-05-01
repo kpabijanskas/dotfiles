@@ -1,0 +1,122 @@
+# Path
+set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ $PATH
+
+switch (uname)
+    case Darwin
+        set -x PATH /opt/homebrew/bin $PATH
+    case Linux
+end
+
+# Aliases
+alias vi="nvim"
+alias vim="nvim"
+alias nvim="nvim"
+alias e="nvim"
+
+switch (uname)
+    case Darwin
+        function brew-up
+            brew update
+            brew upgrade
+        end
+
+        function up
+            echo ">>>> Updating Homebrew"
+            brew-up
+        end
+
+        set -x HOMEBREW_NO_INSTALL_CLEANUP true
+
+    case Linux
+        alias nlc="nordlayer connect {{ (rbwFields "work" "--folder" "Chezmoi").vpn_name.value }}"
+        alias nld="nordlayer disconnect"
+        alias nls="nordlayer status"
+        alias dnf-up="sudo dnf update -y"
+        alias flatpak-up="sudo flatpak update -y"
+        alias flatpak-clear="sudo flatpak uninstall --unused -y"
+        function up
+            echo ">>>> Updating DNF"
+            dnf-up
+            echo
+            echo ">>>> Updating FlatPak"
+            flatpak-up
+            echo
+            echo ">>>> Clearing Unused Flatpak"
+            flatpak-clear
+        end
+end
+
+
+
+if status is-interactive
+    # ATUIN START
+    set -gx ATUIN_SESSION (atuin uuid)
+
+    function _atuin_preexec --on-event fish_preexec
+        if not test -n "$fish_private_mode"
+            set -gx ATUIN_HISTORY_ID (atuin history start -- "$argv[1]")
+        end
+    end
+
+    function _atuin_postexec --on-event fish_postexec
+        set s $status
+        if test -n "$ATUIN_HISTORY_ID"
+            RUST_LOG=error atuin history end --exit $s -- $ATUIN_HISTORY_ID &>/dev/null &
+            disown
+        end
+    end
+
+    function _atuin_search
+        set h (RUST_LOG=error atuin search $argv -i -- (commandline -b) 3>&1 1>&2 2>&3)
+        commandline -f repaint
+        if test -n "$h"
+            commandline -r $h
+        end
+    end
+
+    function _atuin_bind_up
+        # Fallback to fish's builtin up-or-search if we're in search or paging mode
+        if commandline --search-mode; or commandline --paging-mode
+            up-or-search
+            return
+        end
+
+        # Only invoke atuin if we're on the top line of the command
+        set -l lineno (commandline --line)
+        switch $lineno
+            case 1
+                _atuin_search --shell-up-key-binding
+            case '*'
+                up-or-search
+        end
+    end
+
+    bind \cr _atuin_search
+    bind -k up _atuin_bind_up
+    bind \eOA _atuin_bind_up
+    bind \e\[A _atuin_bind_up
+    if bind -M insert >/dev/null 2>&1
+        bind -M insert \cr _atuin_search
+        bind -M insert -k up _atuin_bind_up
+        bind -M insert \eOA _atuin_bind_up
+        bind -M insert \e\[A _atuin_bind_up
+    end
+    # ATUIN END
+
+end
+
+function last_history_item
+    echo $history[1]
+end
+abbr -a !! --position anywhere --function last_history_item
+
+function multicd
+    echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+end
+abbr --add dotdot --regex '^\.\.+$' --function multicd
+
+
+direnv hook fish | source
+
+set -g -x EDITOR nvim
+set -x BAT_THEME Catppuccin-latte
