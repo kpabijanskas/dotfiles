@@ -1,7 +1,8 @@
 LICENSE
 {{- if ne .chezmoi.os "darwin"}}
-Library/LaunchAgents/lt.kpabijanskas.caddy.plist
-etc/Caddyfile
+Library
+etc
+etc
 bin/backup.sh
 bin/update_containers.sh
 {{- end }}
