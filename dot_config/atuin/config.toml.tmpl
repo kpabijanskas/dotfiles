@@ -1,2 +1,2 @@
 update_check = false
-sync_address = "{{ (index (rbw "atuin" "--folder" "Machines on Mac Mini").data.uris 0).uri }}"
+sync_address = "https://{{ (index (rbw "atuin" "--folder" "Machines on Mac Mini").data.uris 0).uri }}"

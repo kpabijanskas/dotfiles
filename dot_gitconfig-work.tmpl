@@ -1,4 +1,2 @@
-{{ if eq .chezmoi.os "linux" }}
 [user]
     email = {{ (rbwFields "work" "--folder" "Chezmoi").email.value }}
-{{ end }}

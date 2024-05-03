@@ -20,9 +20,9 @@
     proxy = {{ (rbwFields "work" "--folder" "Chezmoi").git_proxy.value }}
 {{ end }}
 
-[url "https://{{ (rbwFields "Gitea admin" "--folder" "Machines on Mac Mini").user.value }}:{{ (rbwFields "Gitea admin" "--folder" "Machines on Mac Mini").token.value }}@{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"]
-    insteadOf = "https://{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"
-    insteadOf = "git@{{ (index (rbw "Gitea admin" "--folder" "Machines on Mac Mini").data.uris 0).uri}}:"
+[url "https://{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").user.value }}:{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").token.value }}@{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"]
+    insteadOf = "https://{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"
+    insteadOf = "git@{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}:"
 
 [pull]
     rebase = true
