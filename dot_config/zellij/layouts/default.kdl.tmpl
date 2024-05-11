@@ -1,6 +1,6 @@
 layout {
   pane size=1 borderless=true {
-    plugin location="file:${zellij_plugins.zjstatus}/plugins/zjstatus.wasm" {
+    plugin location="file:{{ .chezmoi.homeDir }}/.config/zellij/plugins/zjstatus.wasm" {
       format_left  "#[bg=#CCD0DA]{mode}#[bg=#CCD0DA] | {tabs}"
       format_right "#[fg=#ACB0BE,bg=#CCD0DA,bold]{session}"
       format_space "#[bg=#CCD0DA]"
