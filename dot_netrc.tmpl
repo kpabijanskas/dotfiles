@@ -1,0 +1,1 @@
+machine {{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }} login {{ (rbwFields "work" "--folder" "Chezmoi").git_http_username.value }} password {{ (rbwFields "work" "--folder" "Chezmoi").git_http_password.value }}

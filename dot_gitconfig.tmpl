@@ -12,13 +12,9 @@
 [includeIf "gitdir:~/workspaces/"]
     path = ~/.gitconfig-work
 
-[url "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_httpscreds.value }}@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"]
+[url "git@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}:"]
     insteadOf = "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"
-    insteadOf = "git@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}:"
-
-[http "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}"]
-    proxy = {{ (rbwFields "work" "--folder" "Chezmoi").git_proxy.value }}
-{{ end }}
+{{- end }}
 
 [url "https://{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").user.value }}:{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").token.value }}@{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"]
     insteadOf = "https://{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"

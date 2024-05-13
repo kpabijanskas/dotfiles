@@ -114,3 +114,4 @@ direnv hook fish | source
 
 set -g -x EDITOR nvim
 set -x BAT_THEME Catppuccin-latte
+set -g -x GOPRIVATE {{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}
