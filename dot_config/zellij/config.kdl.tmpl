@@ -174,7 +174,7 @@
         // Clear scrollback buffer of the focused pane
         bind "Ctrl z" { Clear; }
         bind "?" {
-        LaunchOrFocusPlugin "file:${zellij_plugins.zellij_forgot}/plugins/zellij_forgot.wasm" {
+        LaunchOrFocusPlugin "file:{{ .chezmoi.homeDir }}/.config/zellij/plugins/zellij_forgot.wasm" {
           "switch to entersearch mode" "C-s -> C-e"
           "switch to search mode" "C-s -> C-a"
           "toggle normal/tmux mode" "C-s"
