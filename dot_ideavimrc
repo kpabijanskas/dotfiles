@@ -100,6 +100,9 @@ let g:WhichKeyDesc_leader_V = "<leader>V Unwrap"
 nmap <leader>x <Action>(ToggleLineBreakpoint)
 let g:WhichKeyDesc_leader_x = "<leader>x Toggle Breakpoint"
 
+nmap <leader>X <Action>(CloseContent)
+let g:WhichKeyDesc_leader_X = "<leader>X Close File"
+
 " ---> <leader>w
 let g:WhichKeyDesc_leader_w = "<leader>w Windows"
 
