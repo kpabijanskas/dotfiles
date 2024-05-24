@@ -1,0 +1,7 @@
+{
+	"auths": {
+		"{{ (rbwFields "work" "--folder" "Chezmoi").registry_domain.value }}": {
+			"auth": "{{ printf "%s:%s" ((rbwFields "work" "--folder" "Chezmoi").git_http_username.value) ((rbwFields "work" "--folder" "Chezmoi").git_http_password.value) | b64enc }}"
+		}
+	}
+}
