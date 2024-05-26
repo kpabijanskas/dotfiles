@@ -1,3 +1,25 @@
+{{- $postgresDBPassword := (rbw "postgres db password" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $giteaDBName := (rbwFields "gitea postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $giteaDBUsername := (rbw "gitea postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $giteaDBPassword := (rbw "gitea postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $immichDBName := (rbwFields "immich postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $immichDBUsername := (rbw "immich postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $immichDBPassword := (rbw "immich postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $mealieURI := (index (rbw "mealie" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $mealieDBUsername := (rbw "mealie postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $mealieDBPassword := (rbw "mealie postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $mealieDBName := (rbwFields "mealie postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $wallabagURI := (index (rbw "wallabag" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $wallabagDBName := (rbwFields "wallabag postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $wallabagDBUsername := (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $wallabagDBPassword := (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $vaultwardenDBName := (rbwFields "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $vaultwardenDBUsername := (rbw "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $vaultwardenDBPassword := (rbw "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+{{- $atuinDBName := (rbwFields "atuin postgresql creds" "--folder" "Machines on Mac Mini").db_name.value -}}
+{{- $atuinDBUsername := (rbw "atuin postgresql creds" "--folder" "Machines on Mac Mini").data.username -}}
+{{- $atuinDBPassword := (rbw "atuin postgresql creds" "--folder" "Machines on Mac Mini").data.password -}}
+
 #!/bin/bash
 
 ATUIN_VERSION=0639ff4
@@ -13,7 +35,7 @@ restart() {
 
 restart postgresql \
     -v postgresql_data:/var/lib/postgresql/data \
-    -e POSTGRES_PASSWORD='{{ (rbw "postgres db password" "--folder" "Machines on Mac Mini").data.password }}' \
+    -e POSTGRES_PASSWORD='{{ $postgresDBPassword }}' \
     --ip 192.168.216.3 \
     pgvector/pgvector:"$PGVECTOR_VERSION"
 restart redis \
@@ -36,9 +58,9 @@ restart gitea \
     -v gitea_data:/data \
     -e 'GITEA__database__DB_TYPE=postgres' \
     -e 'GITEA__database__HOST=192.168.216.3:5432' \
-    -e 'GITEA__database__NAME={{ (rbwFields "gitea postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}' \
-    -e 'GITEA__database__USER={{ (rbw "gitea postgresql creds" "--folder" "Machines on Mac Mini").data.username }}' \
-    -e 'GITEA__database__PASSWD={{ (rbw "gitea postgresql creds" "--folder" "Machines on Mac Mini").data.password }}' \
+    -e 'GITEA__database__NAME={{ $giteaDBName }}' \
+    -e 'GITEA__database__USER={{ $giteaDBUsername }}' \
+    -e 'GITEA__database__PASSWD={{ $giteaDBPassword }}' \
     --ip=192.168.216.4 \
     gitea/gitea:latest
 restart immich \
@@ -49,9 +71,9 @@ restart immich \
     -e 'PGID=1000' \
     -e 'TZ=Europe/Vilnius' \
     -e 'DB_HOSTNAME=192.168.216.3' \
-    -e 'DB_USERNAME={{ (rbw "immich postgresql creds" "--folder" "Machines on Mac Mini").data.username }}' \
-    -e 'DB_PASSWORD={{ (rbw "immich postgresql creds" "--folder" "Machines on Mac Mini").data.password }}' \
-    -e 'DB_DATABASE_NAME={{ (rbwFields "immich postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}' \
+    -e 'DB_USERNAME={{ $immichDBUsername }}' \
+    -e 'DB_PASSWORD={{ $immichDBPassword }}' \
+    -e 'DB_DATABASE_NAME={{ $immichDBName }}' \
     -e 'REDIS_HOSTNAME=192.168.216.7' \
     -e 'MACHINE_LEARNING_GPU_ACCELERATION=true' \
     -e 'MACHINE_LEARNING_WORKERS=1' \
@@ -67,26 +89,26 @@ restart mealie \
     -e 'TZ=Europe/Vilnius' \
     -e 'MAX_WORKERS=1' \
     -e 'WEB_CONCURRENCY=1' \
-    -e 'BASE_URL=https://{{ (index (rbw "mealie" "--folder" "Machines on Mac Mini").data.uris 0).uri }}' \
+    -e 'BASE_URL=https://{{ $mealieURI }}' \
     -e 'DB_ENGINE=postgres' \
-    -e 'POSTGRES_USER={{ (rbw "mealie postgresql creds" "--folder" "Machines on Mac Mini").data.username }}' \
-    -e 'POSTGRES_PASSWORD={{ (rbw "mealie postgresql creds" "--folder" "Machines on Mac Mini").data.password }}' \
+    -e 'POSTGRES_USER={{ $mealieDBUsername }}' \
+    -e 'POSTGRES_PASSWORD={{ $mealieDBPassword }}' \
     -e 'POSTGRES_SERVER=192.168.216.3' \
     -e 'POSTGRES_PORT=5432' \
-    -e 'POSTGRES_DB={{ (rbwFields "mealie postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}' \
+    -e 'POSTGRES_DB={{ $mealieDBName }}' \
     --ip 192.168.216.10 \
     ghcr.io/mealie-recipes/mealie:latest
 restart wallabag \
     -v wallabag_data:/var/www/wallabag/data \
-    -e "POSTGRES_PASSWORD={{ (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.password }}" \
-    -e "POSTGRES_USER={{ (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.username }}" \
+    -e "POSTGRES_PASSWORD={{ $wallabagDBPassword }}" \
+    -e "POSTGRES_USER={{ $wallabagDBUsername }}" \
     -e "SYMFONY__ENV__DATABASE_DRIVER=pdo_pgsql" \
     -e "SYMFONY__ENV__DATABASE_HOST=192.168.216.3" \
     -e "SYMFONY__ENV__DATABASE_PORT=5432" \
-    -e "SYMFONY__ENV__DATABASE_NAME={{ (rbwFields "wallabag postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}" \
-    -e "SYMFONY__ENV__DATABASE_USER={{ (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.username }}" \
-    -e "SYMFONY__ENV__DATABASE_PASSWORD={{ (rbw "wallabag postgresql creds" "--folder" "Machines on Mac Mini").data.password }}" \
-    -e "SYMFONY__ENV__DOMAIN_NAME=http://{{ (index (rbw "wallabag" "--folder" "Machines on Mac Mini").data.uris 0).uri }}" \
+    -e "SYMFONY__ENV__DATABASE_NAME={{ $wallabagDBName }}" \
+    -e "SYMFONY__ENV__DATABASE_USER={{ $wallabagDBUsername }}" \
+    -e "SYMFONY__ENV__DATABASE_PASSWORD={{ $wallabagDBPassword }}" \
+    -e "SYMFONY__ENV__DOMAIN_NAME=http://{{ $wallabagURI }}" \
     --ip 192.168.216.8 \
     wallabag/wallabag:latest
 restart freshrss \
@@ -98,7 +120,7 @@ restart freshrss \
     freshrss/freshrss:latest
 restart vaultwarden \
     -v vaultwarden_data:/data \
-    -e 'DATABASE_URL=postgresql://{{ (rbw "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").data.username }}:{{ (rbw "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").data.password }}@192.168.216.3:5432/{{ (rbwFields "vaultwarden postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}' \
+    -e 'DATABASE_URL=postgresql://{{ $vaultwardenDBUsername }}:{{ $vaultwardenDBPassword }}@192.168.216.3:5432/{{ $vaultwardenDBName }}' \
     -e 'WEBSOCKET_ENABLED=true' \
     --ip=192.168.216.5 \
     vaultwarden/server:latest
@@ -106,6 +128,6 @@ restart atuin \
     -v atuin_config:/config \
     -e 'ATUIN_HOST=0.0.0.0' \
     -e 'ATUIN_OPEN_REGISTRATION=false' \
-    -e 'ATUIN_DB_URI=postgres://{{ (rbw "atuin postgresql creds" "--folder" "Machines on Mac Mini").data.username }}:{{ (rbw "atuin postgresql creds" "--folder" "Machines on Mac Mini").data.password }}@192.168.216.3:5432/{{ (rbwFields "atuin postgresql creds" "--folder" "Machines on Mac Mini").db_name.value }}' \
+    -e 'ATUIN_DB_URI=postgres://{{ $atuinDBUsername }}:{{ $atuinDBPassword }}@192.168.216.3:5432/{{ $atuinDBName }}' \
     --ip 192.168.216.11  \
     ghcr.io/atuinsh/atuin:"$ATUIN_VERSION" server start

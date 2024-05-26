@@ -1,6 +1,15 @@
-{{ (index (rbw "nextcloud" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{- $cloudflareToken := (rbwFields "cloudflare").token.value -}}
+{{- $nextcloudURI := (index (rbw "nextcloud" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $giteaURI := (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $vaultwardenURI := (index (rbw "vaultwarden" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $freshrssURI := (index (rbw "freshrss" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $wallabagURI := (index (rbw "wallabag" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $immichURI := (index (rbw "immich" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $mealieURI := (index (rbw "mealie" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{- $atuinURI := (index (rbw "atuin" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
+{{ $nextcloudURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy http://nextcloud.orb.local {
         header_down -Upgrade
@@ -9,63 +18,63 @@
     log
 }
 
-{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $giteaURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy https://gitea.orb.local {
     }
     encode gzip
 }
 
-{{ (index (rbw "vaultwarden" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $vaultwardenURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy https://vaultwarden.orb.local {
     }
     encode gzip
 }
 
-{{ (index (rbw "freshrss" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $freshrssURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy https://freshrss.orb.local {
     }
     encode gzip
 }
 
-{{ (index (rbw "wallabag" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $wallabagURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy https://wallabag.orb.local {
     }
     encode gzip
 }
 
-{{ (index (rbw "immich" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $immichURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy http://immich.orb.local:8080 {
     }
     encode gzip
 }
 
-{{ (index (rbw "mealie" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $mealieURI}} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy http://mealie.orb.local {
     }
     encode gzip
 }
 
-{{ (index (rbw "atuin" "--folder" "Machines on Mac Mini").data.uris 0).uri}} {
+{{ $atuinURI }} {
     tls {
-        dns cloudflare {{ (rbwFields "cloudflare").token.value }}
+        dns cloudflare {{ $cloudflareToken }}
     }
     reverse_proxy http://atuin.orb.local {
     }

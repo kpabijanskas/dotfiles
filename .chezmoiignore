@@ -8,5 +8,6 @@ bin/update_containers.sh
 {{- end }}
 {{- if ne .chezmoi.os "linux" }}
 .gitconfig-work
+.docker/config.json
 .netrc
 {{- end }}

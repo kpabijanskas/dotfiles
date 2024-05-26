@@ -1,3 +1,5 @@
+{{- $vpnName := (rbwFields "work" "--folder" "Chezmoi").vpn_name.value -}}
+{{- $gitDomain := (rbwFields "work" "--folder" "Chezmoi").git_domain.value -}}
 # Path
 set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin {{ end }}$PATH
 
@@ -22,7 +24,7 @@ switch (uname)
         set -x HOMEBREW_NO_INSTALL_CLEANUP true
 
     case Linux
-        alias nlc="nordlayer connect {{ (rbwFields "work" "--folder" "Chezmoi").vpn_name.value }}"
+        alias nlc="nordlayer connect {{ $vpnName }}"
         alias nld="nordlayer disconnect"
         alias nls="nordlayer status"
         alias dnf-up="sudo dnf update -y"
@@ -115,5 +117,5 @@ direnv hook fish | source
 set -g -x EDITOR nvim
 set -x BAT_THEME Catppuccin-latte
 {{- if eq .chezmoi.os "linux" }}
-set -g -x GOPRIVATE {{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}
+set -g -x GOPRIVATE {{ $gitDomain }}
 {{- end }}

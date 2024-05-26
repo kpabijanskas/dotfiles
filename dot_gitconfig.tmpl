@@ -1,24 +1,31 @@
+{{- $personalEmail := (rbw "personal_email" "--folder" "Chezmoi").data.username -}}
+{{- $workGitDomain := (rbwFields "work" "--folder" "Chezmoi").git_domain.value -}}
+{{- $username := (rbwFields "work" "--folder" "Chezmoi").git_http_username.value -}}
+{{- $password := (rbwFields "work" "--folder" "Chezmoi").git_http_password.value -}}
+{{- $giteaUsername := (rbwFields "gitea" "--folder" "Machines on Mac Mini").user.value -}}
+{{- $giteaToken := (rbwFields "gitea" "--folder" "Machines on Mac Mini").token.value -}}
+{{- $giteaURI := (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
 [push]
     autoSetupRemote = true
 
 [user]
     name = Karolis Pabijanskas
-    email = {{ (rbw "personal_email" "--folder" "Chezmoi").data.username}}
+    email = {{ $personalEmail }}
 
 {{ if eq .chezmoi.os "linux" }}
-[includeIf "gitdir:~/repos/{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"]
+[includeIf "gitdir:~/repos/{{ $workGitDomain }}/"]
     path = ~/.gitconfig-work
 
 [includeIf "gitdir:~/workspaces/"]
     path = ~/.gitconfig-work
 
-[url "git@{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}:"]
-    insteadOf = "https://{{ (rbwFields "work" "--folder" "Chezmoi").git_domain.value }}/"
+[url "git@{{ $workGitDomain }}:"]
+    insteadOf = "https://{{ $workGitDomain }}/"
 {{- end }}
 
-[url "https://{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").user.value }}:{{ (rbwFields "gitea" "--folder" "Machines on Mac Mini").token.value }}@{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"]
-    insteadOf = "https://{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}/"
-    insteadOf = "git@{{ (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri}}:"
+[url "https://{{ $giteaUsername }}:{{ $giteaToken }}@{{ $giteaURI }}/"]
+    insteadOf = "https://{{ $giteaURI }}/"
+    insteadOf = "git@{{ $giteaURI }}:"
 
 [pull]
     rebase = true

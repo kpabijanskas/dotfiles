@@ -14,7 +14,7 @@ vim.o.hidden = true
 vim.o.virtualedit = "block"
 
 -- termuicolors
-vim.o.termuicolors = true
+-- vim.o.termuicolors = true
 
 -- Always show the sign column
 vim.o.signcolumn = "yes:2"

@@ -1,5 +1,6 @@
+{{- $token := (rbwFields "Exercism" "--folder" "Chezmoi").token.value -}}
 {
   "apibaseurl": "https://api.exercism.io/v1",
-  "token": "{{ (rbwFields "Exercism" "--folder" "Chezmoi").token.value }}",
+  "token": "{{ $token }}",
   "workspace": "{{ .chezmoi.homeDir }}/workspaces/exercism"
 }
