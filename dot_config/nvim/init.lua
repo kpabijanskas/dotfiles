@@ -13,9 +13,6 @@ vim.o.hidden = true
 -- Allow moving the cursor past last character in block visual
 vim.o.virtualedit = "block"
 
--- termuicolors
--- vim.o.termuicolors = true
-
 -- Always show the sign column
 vim.o.signcolumn = "yes:2"
 
@@ -75,33 +72,33 @@ vim.o.encoding = "utf-8"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
-	checker = {
-		enabled = true,
-		notify = false,
-		frequency = 86400, -- once a day
-	},
+    checker = {
+        enabled = true,
+        notify = false,
+        frequency = 86400, -- once a day
+    },
 })
 
 -- Perl-style regex by default
 vim.keymap.set("n", "/", "/\\v", {
-	noremap = true,
-	silent = true,
+    noremap = true,
+    silent = true,
 })
 vim.keymap.set("x", "/", "/\\v", {
-	noremap = true,
-	silent = true,
+    noremap = true,
+    silent = true,
 })
 
 -- -- Normal mode paste button that is not plagued by insert mode formatting
@@ -119,4 +116,3 @@ vim.keymap.set({ "n", "i", "x" }, "<right>", "<nop>", {})
 
 -- Disable F1
 vim.keymap.set({ "n", "i", "x", "v" }, "<F1>", "<nop>", {})
-
