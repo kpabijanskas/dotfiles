@@ -1,6 +1,6 @@
 local wezterm = require("wezterm")
 return {
-    window_decorations = "TITLE | RESIZE",
+    window_decorations = "INTEGRATED_BUTTONS|RESIZE",
     enable_scroll_bar = false,
     enable_tab_bar = false,
     font = wezterm.font("JetBrains{{ if ne .chezmoi.os "darwin" }} {{ end}}Mono Nerd Font Mono"),
