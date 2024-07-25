@@ -58,7 +58,7 @@
     tls {
         dns cloudflare {{ $cloudflareToken }}
     }
-    reverse_proxy http://immich.orb.local:8080 {
+    reverse_proxy http://immich.orb.local:3001 {
     }
     encode gzip
 }
