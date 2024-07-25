@@ -1,11 +1,7 @@
-local pn = require("../plugin_names")
-
-local function indent_blankline_config()
-	require("ibl").setup({})
-end
+local pn = require("plugin_names")
 
 return {
 	pn.indent_blankline,
-	config = indent_blankline_config,
+	main = "ibl",
+	opts = {},
 }
-

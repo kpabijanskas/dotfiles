@@ -1,7 +1,8 @@
-local pn = require("../plugin_names")
+local pn = require("plugin_names")
 
-local function surround_config()
-	require("nvim-surround").setup({
+return {
+	pn.surround,
+	opts = {
 		keymaps = {
 			insert = "<nop>",
 			insert_line = "<nop>",
@@ -15,11 +16,5 @@ local function surround_config()
 			change = "mr",
 			change_line = "mR",
 		},
-	})
-end
-
-return {
-	pn.surround,
-	config = surround_config,
+	},
 }
-

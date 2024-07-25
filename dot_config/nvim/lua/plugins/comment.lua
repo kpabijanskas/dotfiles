@@ -1,11 +1,6 @@
-local pn = require("../plugin_names")
-
-local function comment_config()
-	require("Comment").setup()
-end
+local pn = require("plugin_names")
 
 return {
 	pn.comment,
-	config = comment_config,
+	config = true,
 }
-

@@ -1,12 +1,36 @@
-local pn = require("../plugin_names")
-local reg = require("../register_keybindings")
+local pn = require("plugin_names")
 
 local function trouble_config()
 	local trouble = require("trouble")
 	trouble.setup()
+	local wk = require("which-key")
 
-	reg.register_leader_keybindings({
-		t = { trouble.toggle, "Open Trouble" },
+	local kb_table = {
+		{
+			"<leader>t",
+			function()
+				trouble.toggle({
+					mode = "diagnostics",
+					filter = {
+						any = {
+							buf = 0,
+							{
+								severity = vim.diagnostic.severity.ERROR,
+								function(item)
+									return item.filename:find((vim.loop or vim.uv).cwd(), 1, true)
+								end,
+							},
+						},
+					},
+				})
+			end,
+			desc = "Open Trouble",
+		},
+	}
+
+	wk.add({
+		kb_table,
+		{ mode = "v", kb_table },
 	})
 end
 
@@ -17,4 +41,3 @@ return {
 	},
 	config = trouble_config,
 }
-

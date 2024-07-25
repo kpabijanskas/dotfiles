@@ -1,4 +1,4 @@
-local pn = require("../plugin_names")
+local pn = require("plugin_names")
 
 local function treesitter_config()
 	require("nvim-treesitter.install").compilers = { "gcc" }
@@ -8,9 +8,10 @@ local function treesitter_config()
 		auto_install = true,
 		highlight = {
 			enable = true,
-			additional_vim_regex_highlighting = { "org", "markdown" },
+			additional_vim_regex_highlighting = { "markdown" },
 		},
 		sync_install = false,
+		modules = {},
 	})
 end
 
@@ -19,4 +20,3 @@ return {
 	build = ":TSUpdate",
 	config = treesitter_config,
 }
-

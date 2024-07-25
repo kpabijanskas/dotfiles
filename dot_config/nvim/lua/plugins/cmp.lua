@@ -1,4 +1,4 @@
-local pn = require("../plugin_names")
+local pn = require("plugin_names")
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -102,10 +102,4 @@ return {
 		},
 		config = cmp_config,
 	},
-	{
-		pn.luasnip,
-		dependencies = { pn.friendly_snippets },
-		build = "make install_jsregexp",
-	},
 }
-

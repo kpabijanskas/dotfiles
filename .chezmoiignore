@@ -11,3 +11,4 @@ bin/update_containers.sh
 .docker/config.json
 .netrc
 {{- end }}
+.config/nvim/projects/*

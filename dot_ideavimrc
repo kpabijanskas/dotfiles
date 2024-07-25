@@ -34,6 +34,9 @@ let g:WhichKey_DefaultDelay = 0
 """ Mappings --------------------------------
 
 " ---> <leader>
+nmap <leader>! <Action>(ActivateTerminalToolWindow)
+let g:WhichKeyDesc_leader_exclamation = "<leader>! Show Terminal"
+
 nmap <leader>a <Action>(Refactorings.QuickListPopupAction)
 let g:WhichKeyDesc_leader_a = "<leader>a Refactor This"
 
@@ -103,11 +106,17 @@ let g:WhichKeyDesc_leader_x = "<leader>x Toggle Breakpoint"
 nmap <leader>X <Action>(CloseContent)
 let g:WhichKeyDesc_leader_X = "<leader>X Close File"
 
+" --> <leader>g
+let g:WhichKeyDesc_leader_g = "<leader>g VCS Operations"
+
+nmap <leader>ga <Action>(Annotate)
+let g:WhichKeyDesc_leader_g_a = "<leader>ga Annotate"
+
+nmap <leader>gb <Action>(Git.Branches)
+let g:WhichKeyDesc_leader_g_b = "<leader>gb Branches"
+
 " ---> <leader>w
 let g:WhichKeyDesc_leader_w = "<leader>w Windows"
-
-nmap <leader>! <Action>(ActivateTerminalToolWindow)
-let g:WhichKeyDesc_leader_exclamation = "<leader>! Show Terminal"
 
 nmap <leader>wa <Action>(ActivateDatabaseToolWindow)
 let g:WhichKeyDesc_leader_w_a = "<leader>wa Show Database"
@@ -157,13 +166,23 @@ let g:WhichKeyDesc_leader_z_r = "<leader>zr Reload vim config"
 nmap <leader>zt <Action>(VimFindActionIdAction)
 let g:WhichKeyDesc_leader_z_t = "<leader>zt Toggle Action ID Tracking"
 
+" ---> z
+let g:WhichKeyDesc_z_f = "zf Toggle fold"
+nmap zf <Action>(ExpandCollapseToggleAction)
+
+let g:WhichKeyDesc_z_c = "zc Collapse fold"
+nmap zc <Action>(CollapseRegion)
+
+let g:WhichKeyDesc_z_e = "ze Expand fold"
+nmap ze <Action>(ExpandRegion)
+
 " ---> g
 " defined by default
 let g:WhichKeyDesc_g_d = "gd Go To Declaration"
 
 let g:WhichKeyDesc_g_D = "gD Go To Definition"
 
-namp gi <Action>(GotoImplementation)
+nmap gi <Action>(GotoImplementation)
 let g:WhichKeyDesc_g_i = "gi Go To Implementation"
 
 nmap gl <Action>(GotoRelated)
@@ -177,6 +196,18 @@ let g:WhichKeyDesc_g_t = "gt Go To Type Declaration"
 
 nmap gy <Action>(GotoSuperMethod)
 let g:WhichKeyDesc_g_y = "gy Go To Super Method"
+
+nmap g[ <Action>(PreviousProjectWindow)
+let g:WhichKeyDec_g_leftbracket = "g[ Previous Project Window"
+
+nmap g] <Action>(NextProjectWindow)
+let g:WhichKeyDec_g_leftbracket = "g] Next Project Window"
+
+nmap gn <Action>(NextTab)
+let g:WhichKeyDesc_g_n = "gn Next Tab"
+
+nmap gp <Action>(PreviousTab)
+let g:WhichKeyDesc_g_p = "gp Previous Tab"
 
 " ---> <leader>l
 let g:WhichKeyDesc_leader_l = "<leader>l Language-Specific"
@@ -226,17 +257,26 @@ let g:WhichKeyDesc_rightbracket_e = "]e Go To Next Change"
 " ---> [
 let g:WhichKeyDesc_rightbracket = "Go To Previous"
 
-map [d <Action>(GotoPreviousError)
 let g:WhichKeyDesc_leftbracket_d = "[d Go to Prev Error"
+nmap [d <Action>(GotoPreviousError)
 
 nmap [e <Action<(JumpToLastChange)
 let g:WhichKeyDesc_rightbracket_e = "]e Go To Prev Change"
+
+let g:WhichKeyDesc_leftbracket_leftbracket = "[[ Go to previous method"
+nmap [[ <Action>(MethodUp)
+
+let g:WhichKeyDesc_rightbracket_rightbracket = "]] Go to next method"
+nmap ]] <Action>(MethodDown)
+
 
 " ---> NO PREFIX
 nmap <C-k> <Action>(MoveStatementUp)
 nmap <C-j> <Action>(MoveStatementDown)
 nmap <C-S-k> <Action>(MoveLineUp)
 nmap <C-S-j> <Action>(MoveLineDown)
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
 
 nmap <up> <nop>
 nmap <down> <nop>

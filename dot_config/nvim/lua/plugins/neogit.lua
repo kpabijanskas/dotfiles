@@ -1,13 +1,16 @@
-local pn = require("../plugin_names")
-local reg = require("../register_keybindings")
+local pn = require("plugin_names")
 
 local function neogit_config()
 	local neogit = require("neogit")
+	local wk = require("which-key")
 
 	neogit.setup({})
 
-	reg.register_leader_keybindings({
-		G = { neogit.open, "Open NeoGit" },
+	local kb_table = { "<leader>G", neogit.open, desc = "Open NeoGit" }
+
+	wk.add({
+		{ mode = "n", kb_table },
+		{ mode = "b", kb_table },
 	})
 end
 
@@ -21,4 +24,3 @@ return {
 	},
 	config = neogit_config,
 }
-

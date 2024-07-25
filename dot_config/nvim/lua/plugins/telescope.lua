@@ -1,70 +1,80 @@
-local pn = require("../plugin_names")
-local reg = require("../register_keybindings")
+local pn = require("plugin_names")
 
 local function telescope_config()
-    local telescope = require("telescope")
-    local builtin = require("telescope.builtin")
+	local telescope = require("telescope")
+	local builtin = require("telescope.builtin")
+	local wk = require("which-key")
 
-    telescope.load_extension("fzf")
+	telescope.load_extension("fzf")
+	telescope.load_extension("dap")
 
-    telescope.setup({
-        extensions = {
-            fzf = {
-                fuzzy = true,
-                override_generic_sorter = true,
-                override_file_sorter = true,
-                case_mode = "smart_case",
-            },
-        },
-    })
+	telescope.setup({
+		extensions = {
+			dap = {
+				overwrite_pick_one = false,
+			},
+			fzf = {
+				fuzzy = true,
+				override_generic_sorter = true,
+				override_file_sorter = true,
+				case_mode = "smart_case",
+			},
+		},
+	})
 
-    reg.register_leader_keybindings({
-        C = { builtin.commands, "Open command picker" },
-        f = { builtin.find_files, "Open file picker" },
-        F = { builtin.git_files, "Open Git file picker" },
-        b = { builtin.buffers, "Open buffer picker" },
-        j = { builtin.jumplist, "Open jumplist picker" },
-        s = { builtin.lsp_document_symbols, "Open symbol picker" },
-        S = { builtin.lsp_workspace_symbols, "Open workspace symbol picker" },
-        d = {
-            function()
-                builtin.diagnostics({ bufnr = 0 })
-            end,
-            "Open diagnostics picker",
-        },
-        D = { builtin.diagnostics, "Open workspace diagnostics picker" },
-        ["'"] = { builtin.resume, "Open last picker" },
-        ["/"] = { builtin.live_grep, "Global search" },
-        h = { builtin.lsp_references, "Show symbol references" },
-    })
+	local kb_table = {
+		{ "<leader>C", builtin.commands, desc = "Open command picker" },
+		{ "<leader>f", builtin.find_files, desc = "Open file picker" },
+		{ "<leader>F", builtin.git_files, desc = "Open Git file picker" },
+		{
+			"<leader>b",
+			function()
+				builtin.buffers({ ignore_current_buffer = true })
+			end,
+			desc = "Open buffer picker",
+		},
+		{ "<leader>j", builtin.jumplist, desc = "Open jumplist picker" },
+		{ "<leader>s", builtin.lsp_document_symbols, desc = "Open symbol picker" },
+		{ "<leader>S", builtin.lsp_workspace_symbols, desc = "Open workspace symbol picker" },
+		{
+			"<leader>d",
+			function()
+				builtin.diagnostics({ bufnr = 0 })
+			end,
+			desc = "Open diagnostics picker",
+		},
+		{ "<leader>D", builtin.diagnostics, desc = "Open workspace diagnostics picker" },
+		{ "<leader>'", builtin.resume, desc = "Open last picker" },
+		{ "<leader>/", builtin.live_grep, desc = "Global search" },
+		{ "<leader>h", builtin.lsp_references, desc = "Show symbol references" },
+		{ "<leader>vf", builtin.filetypes, desc = "Pick filetype" },
+		{ "<leader>vh", builtin.help_tags, desc = "Search vim help" },
+		{ "<leader>v?", builtin.commands, desc = "List available vim/plugin commands" },
+		{ "gd", builtin.lsp_definitions, desc = "Goto definition" },
+		{ "gy", builtin.lsp_type_definitions, desc = "Goto type definition" },
+		{ "gr", builtin.lsp_references, desc = "Goto references" },
+		{ "gi", builtin.lsp_implementations, desc = "Goto implementation" },
+	}
 
-    reg.register_vim_keybindings({
-        f = { builtin.filetypes, "Pick filetype" },
-        h = { builtin.help_tags, "Search vim help" },
-        ["?"] = { builtin.commands, "List available vim/plugin commands" },
-    })
-
-    reg.register_goto_keybindings({
-        d = { builtin.lsp_definitions, "Goto definition" },
-        y = { builtin.lsp_type_definitions, "Goto type definition" },
-        r = { builtin.lsp_references, "Goto references" },
-        i = { builtin.lsp_implementations, "Goto implementation" },
-    })
+	wk.add({
+		kb_table,
+		{ mode = "v", kb_table },
+	})
 end
 
 return {
-    {
-        pn.telescope_fzf_native,
-        build = "make",
-    },
-    {
-        pn.telescope,
-        tag = "0.1.5",
-        dependencies = {
-            pn.telescope_fzf_native,
-            pn.plenary,
-            pn.which_key,
-        },
-        config = telescope_config,
-    },
+	{
+		pn.telescope_fzf_native,
+		build = "make",
+	},
+	{
+		pn.telescope,
+		tag = "0.1.5",
+		dependencies = {
+			pn.telescope_fzf_native,
+			pn.plenary,
+			pn.which_key,
+		},
+		config = telescope_config,
+	},
 }

@@ -4,7 +4,8 @@ function pro
     set -a DIRECTORIES ~/workspaces
 
     for dir in $DIRECTORIES
-        set repo_list $(fd '\.git$' $dir --prune -utd | sed 's/\/\.git\/$//g'|awk '{ if (NR == 1 || !index($0, prev)) { print; prev = $0 } }')
+        # set repo_list $(fd '\.git$' $dir --prune -utd | sed 's/\/\.git\/$//g'|awk '{ if (NR == 1 || !index($0, prev)) { print; prev = $0 } }')
+        set repo_list $(fd '\.git$' $dir --prune -utd | sed 's/\/\.git\/$//g')
         for repo in $repo_list
             set -a REPOS $repo
         end

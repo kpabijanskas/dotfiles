@@ -1,5 +1,4 @@
-local pn = require("../plugin_names")
-local reg = require("../register_keybindings")
+local pn = require("plugin_names")
 
 local function check_inside_node_type(typ)
 	local tsutils = require("nvim-treesitter.ts_utils")
@@ -20,202 +19,225 @@ end
 local function treesitter_textobjects_config()
 	local tsselect = require("nvim-treesitter.textobjects.select")
 	local tsmove = require("nvim-treesitter.textobjects.move")
+	local wk = require("which-key")
 
-	reg.register_select_inside_keybindings({
-		p = {
+	local kb_table = {
+		{
+			"mip",
 			function()
 				if check_inside_node_type("parameter") then
 					tsselect.select_textobject("@parameter.inner")
 				end
 			end,
-			"Select inside parameter",
+			desc = "Select inside parameter",
 		},
-		c = {
+		{
+			"mic",
 			function()
 				tsselect.select_textobject("@comment.inner")
 			end,
-			"Select inside comment",
+			desc = "Select inside comment",
 		},
-		f = {
+		{
+			"mif",
 			function()
 				if check_inside_node_type({ "function_declaration", "method_declaration" }) then
 					tsselect.select_textobject("@function.inner")
 				end
 			end,
-			"Select inside function",
+			desc = "Select inside function",
 		},
-		l = {
+		{
+			"mil",
 			function()
 				tsselect.select_textobject("@loop.inner")
 			end,
-			"Select inside loop",
+			desc = "Select inside loop",
 		},
-		a = {
+		{
+			"mia",
 			function()
 				tsselect.select_textobject("@assignment.inner")
 			end,
-			"Select inside assignment",
+			desc = "Select inside assignment",
 		},
-		s = {
+		{
+			"mis",
 			function()
 				tsselect.select_textobject("@class.inner")
 			end,
-			"Select inside class",
+			desc = "Select inside class",
 		},
-		o = {
+		{
+			"mio",
 			function()
 				tsselect.select_textobject("@conditional.inner")
 			end,
-			"Select inside conditional",
+			desc = "Select inside conditional",
 		},
-	})
-
-	reg.register_select_around_keybindings({
-		p = {
+		{
+			"map",
 			function()
 				if check_inside_node_type("parameter") then
 					tsselect.select_textobject("@parameter.outer")
 				end
 			end,
-			"Select around parameter",
+			desc = "Select around parameter",
 		},
-		c = {
+		{
+			"mac",
 			function()
 				tsselect.select_textobject("@comment.outer")
 			end,
-			"Select around comment",
+			desc = "Select around comment",
 		},
-		f = {
+		{
+			"maf",
 			function()
 				if check_inside_node_type({ "function_declaration", "method_declaration" }) then
 					tsselect.select_textobject("@function.outer")
 				end
 			end,
-			"Select around function",
+			desc = "Select around function",
 		},
-		l = {
+		{
+			"mal",
 			function()
 				tsselect.select_textobject("@loop.outer")
 			end,
-			"Select around loop",
+			desc = "Select around loop",
 		},
-		a = {
+		{
+			"maa",
 			function()
 				tsselect.select_textobject("@assignment.outer")
 			end,
-			"Select around assignment",
+			desc = "Select around assignment",
 		},
-		s = {
+		{
+			"mas",
 			function()
 				tsselect.select_textobject("@class.outer")
 			end,
-			"Select around class",
+			desc = "Select around class",
 		},
-		o = {
+		{
+			"mao",
 			function()
 				tsselect.select_textobject("@conditional.outer")
 			end,
-			"Select around conditional",
+			desc = "Select around conditional",
 		},
-	})
-
-	reg.register_match_keybindings({
-		m = {
+		{
+			"mm",
 			function()
 				vim.cmd([[normal! %]])
 			end,
-			"Goto matching bracket",
+			desc = "Goto matching bracket",
 		},
-		h = {
+		{
+			"mh",
 			function()
 				tsselect.select_textobject("@assignment.lhs")
 			end,
-			"Select assignment LHS",
+			desc = "Select assignment LHS",
 		},
-		l = {
+		{
+			"ml",
 			function()
 				tsselect.select_textobject("@assignment.rhs")
 			end,
-			"Select assignment RHS",
+			desc = "Select assignment RHS",
 		},
-	})
-
-	reg.register_left_bracket_keybindings({
-		f = {
+		{
+			"[f",
 			function()
 				tsmove.goto_previous_start("@function.outer")
 			end,
-			"Goto previous function start",
+			desc = "Goto previous function start",
 		},
-		F = {
+		{
+			"[F",
 			function()
 				tsmove.goto_previous_end("@function.outer")
 			end,
-			"Goto previous function end",
+			desc = "Goto previous function end",
 		},
-		a = {
+		{
+			"[a",
 			function()
 				tsmove.goto_previous_start("@parameter.outer")
 			end,
-			"Goto previous parameter start",
+			desc = "Goto previous parameter start",
 		},
-		A = {
+		{
+			"[A",
 			function()
 				tsmove.goto_previous_end("@parameter.outer")
 			end,
-			"Goto previous parameter end",
+			desc = "Goto previous parameter end",
 		},
-		c = {
+		{
+			"[c",
 			function()
 				tsmove.goto_previous_start("@comment.outer")
 			end,
-			"Goto previous comment start",
+			desc = "Goto previous comment start",
 		},
-		C = {
+		{
+			"[C",
 			function()
 				tsmove.goto_previous_end("@comment.outer")
 			end,
-			"Goto previous comment end",
+			desc = "Goto previous comment end",
 		},
-	})
-
-	reg.register_right_bracket_keybindings({
-		f = {
+		{
+			"]f",
 			function()
 				tsmove.goto_next_start("@function.outer")
 			end,
-			"Goto next function start",
+			desc = "Goto next function start",
 		},
-		F = {
+		{
+			"]F",
 			function()
 				tsmove.goto_next_end("@function.outer")
 			end,
-			"Goto next function end",
+			desc = "Goto next function end",
 		},
-		a = {
+		{
+			"]a",
 			function()
 				tsmove.goto_next_start("@parameter.outer")
 			end,
-			"Goto next parameter start",
+			desc = "Goto next parameter start",
 		},
-		A = {
+		{
+			"]A",
 			function()
 				tsmove.goto_next_end("@parameter.outer")
 			end,
-			"Goto next parameter end",
+			desc = "Goto next parameter end",
 		},
-		c = {
+		{
+			"]c",
 			function()
 				tsmove.goto_next_start("@comment.outer")
 			end,
-			"Goto next comment start",
+			desc = "Goto next comment start",
 		},
-		C = {
+		{
+			"]C",
 			function()
 				tsmove.goto_next_end("@comment.outer")
 			end,
-			"Goto next comment end",
+			desc = "Goto next comment end",
 		},
+	}
+
+	wk.add({
+		kb_table,
+		{ mode = "v", kb_table },
 	})
 end
 
@@ -227,4 +249,3 @@ return {
 	},
 	config = treesitter_textobjects_config,
 }
-

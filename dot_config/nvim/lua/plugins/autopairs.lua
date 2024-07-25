@@ -1,13 +1,8 @@
-local pn = require("../plugin_names")
-
-local function autopairs_config()
-	require("nvim-autopairs").setup({
-		disable_filetype = { "TelescopePrompt", "lisp" },
-	})
-end
+local pn = require("plugin_names")
 
 return {
 	pn.nvim_autopairs,
-	config = autopairs_config,
+	opts = {
+		disable_filetype = { "TelescopePrompt", "lisp" },
+	},
 }
-

@@ -1,25 +1,29 @@
-local pn = require("../plugin_names")
-local reg = require("../register_keybindings")
+local pn = require("plugin_names")
 
 local function gitsigns_config()
 	local gitsigns = require("gitsigns")
 	gitsigns.setup()
 
-	reg.register_left_bracket_keybindings({
-		g = {
+	local wk = require("which-key")
+	local kb_table = {
+		{
+			"[g",
 			function()
 				gitsigns.prev_hunk({ wrap = true })
 			end,
-			"Goto previous  change",
+			desc = "Goto previous  change",
 		},
-	})
-	reg.register_right_bracket_keybindings({
-		g = {
+		{
+			"]g",
 			function()
 				gitsigns.next_hunk({ wrap = true })
 			end,
-			"Goto next change",
+			desc = "Goto next change",
 		},
+	}
+	wk.add({
+		{ mode = "n", kb_table },
+		{ mode = "v", kb_table },
 	})
 end
 
@@ -30,4 +34,3 @@ return {
 	},
 	config = gitsigns_config,
 }
-

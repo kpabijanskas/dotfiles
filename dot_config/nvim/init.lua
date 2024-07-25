@@ -1,6 +1,6 @@
 -- Leader should be set near the top
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = "  "
 
 -- Disable loading netrw
 vim.g.loaded_netrw = 1
@@ -72,41 +72,37 @@ vim.o.encoding = "utf-8"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
-    checker = {
-        enabled = true,
-        notify = false,
-        frequency = 86400, -- once a day
-    },
+	checker = {
+		enabled = true,
+		notify = false,
+		frequency = 86400, -- once a day
+	},
+	change_detection = {
+		notify = false,
+	},
 })
 
 -- Perl-style regex by default
 vim.keymap.set("n", "/", "/\\v", {
-    noremap = true,
-    silent = true,
+	noremap = true,
+	silent = true,
 })
 vim.keymap.set("x", "/", "/\\v", {
-    noremap = true,
-    silent = true,
+	noremap = true,
+	silent = true,
 })
-
--- -- Normal mode paste button that is not plagued by insert mode formatting
--- vim.keymap.set("n", "<leader>p", ":set paste<CR>:put *<CR>:set nopaste<CR>", {
--- 	noremap = true,
--- 	silent = true,
--- 	desc = "Paste",
--- })
 
 -- Disable arrows
 vim.keymap.set({ "n", "i", "x" }, "<up>", "<nop>", {})
