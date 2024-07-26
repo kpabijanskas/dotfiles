@@ -2,6 +2,7 @@ local pn = require("plugin_names")
 local common_lib = require("lib.common")
 local pick = require("lib.pick")
 
+
 local function zk_searches()
     return {
         ["All active projects"] = {
@@ -70,6 +71,55 @@ local function new_from_zk_template(title)
     pick(results, "New from template with title '" .. title .. "'...")
 end
 
+local function split_dategenforzk_output(s)
+    local output = {}
+
+    local vars = vim.split(s, ",")
+
+    for _, var in ipairs(vars) do
+        local vs = vim.split(var, "=")
+        output[vs[1]] = vs[2]
+    end
+
+    return output
+end
+
+
+local function create_link_under_cursor(options)
+    local zk = require("zk")
+    local joblib = require("plenary.job")
+    local tsu = require("nvim-treesitter.ts_utils")
+    -- vim.treesitter.get_node for some reason only ever returns inline, not specific enough
+    local node_under_cursor = tsu.get_node_at_cursor()
+
+    if node_under_cursor == nil or node_under_cursor:type() ~= "link_text" then
+        return
+    end
+
+    local node_link = vim.split(tsu.get_node_text(node_under_cursor)[1], "|")[1]
+    local dir, title = common_lib.split_on_last_occurence(node_link, "/")
+
+    local job = joblib:new({
+        command = "dategenforzk",
+        args = {
+            "-txt",
+            title,
+        },
+    })
+    job:sync()
+
+    options = options or {}
+    options.title = title
+    options.dir = dir
+
+    if job.code == 0 then
+        options.extra = split_dategenforzk_output(job:result()[1])
+    end
+
+    zk.new(options)
+end
+
+
 local function pick_zk_search()
     local zk = require("zk")
     local results = {}
@@ -114,6 +164,41 @@ local function zk_file_table()
     local wk = require("which-key")
 
     local kb_table = {
+        {
+            "gd",
+            function()
+                -- local params = vim.lsp.util.make_position_params()
+                --  vim.lsp.buf_request('textDocument/definition', params, function(err, result, ctx, config)
+                --      print("ERR ", err)
+                --      print("RESULT", reslt)
+                -- end)
+
+
+
+                vim.lsp.buf_request(0, 'textDocument/definition', vim.lsp.util.make_position_params(),
+                    function(err, result)
+                        if err ~= nil then
+                            print("ERROR: " .. err)
+                        end
+
+                        if result ~= nil then
+                            vim.lsp.buf.definition()
+                            return
+                        end
+
+                        local buf_to_refresh = vim.api.nvim_get_current_buf()
+                        create_link_under_cursor()
+
+                        -- this empty request just forces LSP to reload diagnostics, hence rendering the new file name
+                        vim.lsp.buf_request(buf_to_refresh, 'textDocument/didChange', vim.lsp.util.make_position_params(),
+                            function() end)
+                    end)
+
+                local ans = vim.lsp.buf.definition()
+                print(ans)
+            end,
+            desc = "Optionally create and follow link"
+        },
         { "<leader><space>",  group = "ZK" },
 
         { "<leader><space>n", commands.get("ZkNotes"),            desc = "Show Notes" },
@@ -194,6 +279,7 @@ local function zk_file_table()
     }
 
     wk.add({
+        buffer = vim.api.nvim_get_current_buf(),
         kb_table,
         { mode = "v", kb_table },
         v_only_kb_table,
@@ -224,19 +310,6 @@ end
 
 local function zk_buffer_local_opts()
     vim.opt_local.conceallevel = 2
-end
-
-local function split_dategenforzk_output(s)
-    local output = {}
-
-    local vars = vim.split(s, ",")
-
-    for _, var in ipairs(vars) do
-        local vs = vim.split(var, "=")
-        output[vs[1]] = vs[2]
-    end
-
-    return output
 end
 
 local calendar_note_date_format = {
@@ -292,41 +365,6 @@ local function open_index_note(options)
     vim.api.nvim_command("edit general/index.md")
 end
 
-local function create_link_under_cursor(options)
-    local zk = require("zk")
-    local joblib = require("plenary.job")
-    local tsu = require("nvim-treesitter.ts_utils")
-    -- vim.treesitter.get_node for some reason only ever returns inline, not specific enough
-    local node_under_cursor = tsu.get_node_at_cursor()
-
-    if node_under_cursor == nil or node_under_cursor:type() ~= "link_text" then
-        return
-    end
-
-    local node_link = vim.split(tsu.get_node_text(node_under_cursor)[1], "|")[1]
-    local dir, title = common_lib.split_on_last_occurence(node_link, "/")
-
-    local job = joblib:new({
-        command = "dategenforzk",
-        args = {
-            "-txt",
-            title,
-        },
-    })
-    job:sync()
-
-    options = options or {}
-    options.title = title
-    options.dir = dir
-
-    if job.code == 0 then
-        options.extra = split_dategenforzk_output(job:result()[1])
-    end
-
-    zk.new(options)
-    vim.api.nvim_command("LspRestart")
-end
-
 local function load_search(search_name)
     return function(options)
         local zk = require("zk")
@@ -342,8 +380,12 @@ local function zk_config()
     local commands = require("zk.commands")
     local wk = require("which-key")
 
+
+    local config = require("zk.config").defaults
+    config.picker = "telescope"
     zk.setup({
         picker = "telescope",
+        lsp = {},
     })
 
     commands.add("ZkToday", load_calendar_note("daily"))

@@ -1,117 +1,132 @@
 local pn = require("plugin_names")
 
 local function whichkey_config()
-	local wk = require("which-key")
+    local wk = require("which-key")
 
-	vim.o.timeoutlen = 0
+    vim.o.timeoutlen = 0
 
-	wk.setup({
-		delay = 0,
-		plugins = {
-			presets = {
-				windows = false,
-				nav = false,
-				z = false,
-				g = false,
-			},
-		},
-		-- replace = {
-		-- 	{ "<Space>", "SPC" },
-		-- 	{ "<CR>", "RET" },
-		-- 	{ "<TAB>", "TAB" },
-		-- },
-		-- win = {
-		-- 	border = "single",
-		-- },
-	})
+    wk.setup({
+        plugins = {
+            presets = {
+                windows = false,
+                nav = false,
+                z = false,
+                g = false,
+            },
+        },
+        replace = {
+            key = {
+                { "<Space>", "SPC" },
+                { "<CR>",    "RET" },
+                { "<TAB>",   "TAB" },
+            },
+        },
+        win = {
+            border = "single",
+        },
+        sort = { "alphanum" },
+        icons = {
+            mappings = false,
+        },
+    })
 
-	local kb_table = {
-		{ "<leader>c", "<cmd>nohl<cr>", desc = "Clear highlights" },
+    local kb_table = {
+        { "<leader>c",  "<cmd>nohl<cr>",                         desc = "Clear highlights" },
 
-		{ "<leader>w", proxy = "<C-w>", group = "Window" },
-		{ "<leader>ww", desc = "Goto next split" },
-		{ "<leader>ws", desc = "Horizontal split" },
-		{ "<leader>wv", desc = "Vertical split" },
-		{ "<leader>wo", desc = "Close all splits except current" },
-		{ "<leader>wh", desc = "Jump to left split" },
-		{ "<leader>wj", desc = "Jump to split below" },
-		{ "<leader>wk", desc = "Jump to split above" },
-		{ "<leader>wl", desc = "Jump to right split" },
-		{ "<leader>wq", desc = "Close current split" },
-		{ "<leader>wH", desc = "Swap with left split" },
-		{ "<leader>wJ", desc = "Swap with split below" },
-		{ "<leader>wK", desc = "Swap with split above" },
-		{ "<leader>wL", desc = "Swap with split right" },
-		{ "<leader>wn", desc = "New split with a scratch buffer" },
+        { "<leader>w",  proxy = "<C-w>",                         group = "Window" },
+        { "<leader>ww", desc = "Goto next split" },
+        { "<leader>ws", desc = "Horizontal split" },
+        { "<leader>wv", desc = "Vertical split" },
+        { "<leader>wo", desc = "Close all splits except current" },
+        { "<leader>wh", desc = "Jump to left split" },
+        { "<leader>wj", desc = "Jump to split below" },
+        { "<leader>wk", desc = "Jump to split above" },
+        { "<leader>wl", desc = "Jump to right split" },
+        { "<leader>wq", desc = "Close current split" },
+        { "<leader>wH", desc = "Swap with left split" },
+        { "<leader>wJ", desc = "Swap with split below" },
+        { "<leader>wK", desc = "Swap with split above" },
+        { "<leader>wL", desc = "Swap with split right" },
+        { "<leader>wn", desc = "New split with a scratch buffer" },
 
-		{ "<leader>v", group = "Vim keybindings" },
-		{
-			"<leader>vw",
-			"<cmd>checkhealth which-key<cr>",
-			desc = "Check for any conflicting which-key keybindings",
-		},
+        { "<leader>f",  group = "File ops" },
+        { "<leader>fw", "<cmd>w<cr>",                            desc = "Write file" },
+        { "<leader>fW", "<cmd>w!<cr>",                           desc = "Write! file" },
+        { "<leader>fs", "<cmd>bufdo w<cr>",                      desc = "Write all files" },
+        { "<leader>fS", "<cmd>bufdo w!<cr>",                     desc = "Write! all files" },
+        { "<leader>fq", "<cmd>q<cr>",                            desc = "Quit" },
+        { "<leader>fQ", "<cmd>q!<cr>",                           desc = "Force Quit" },
+        { "<leader>fx", "<cmd>x<cr>",                            desc = "Write file and quit" },
+        { "<leader>fX", "<cmd>x!<cr>",                           desc = "Write! file and quit" },
 
-		{ "g", group = "Goto" },
-		{ "gn", "<cmd>bn<cr>", desc = "Goto next buffer" },
-		{ "gp", "<cmd>bp<cr>", desc = "Goto previous buffer" },
+        { "<leader>v",  group = "Vim keybindings" },
+        {
+            "<leader>vw",
+            "<cmd>checkhealth which-key<cr>",
+            desc = "Check for any conflicting which-key keybindings",
+        },
 
-		{ "m", group = "Match" },
-		{
-			"mm",
-			function()
-				vim.cmd([[normal! %]])
-			end,
-			desc = "Goto matching bracket",
-		},
+        { "g",  group = "Goto" },
+        { "gn", "<cmd>bn<cr>",  desc = "Goto next buffer" },
+        { "gp", "<cmd>bp<cr>",  desc = "Goto previous buffer" },
 
-		{ "]", group = "Right Bracket" },
-		{ "]d", vim.diagnostic.goto_next, desc = "Goto next diagnostic" },
+        { "m",  group = "Match" },
+        {
+            "mm",
+            function()
+                vim.cmd([[normal! %]])
+            end,
+            desc = "Goto matching bracket",
+        },
 
-		{ "[", group = "Left Bracket" },
-		{ "[d", vim.diagnostic.goto_prev, desc = "Goto previous diagnostic" },
+        { "]",         group = "Right Bracket" },
+        { "]d",        vim.diagnostic.goto_next,  desc = "Goto next diagnostic" },
 
-		{ "z", group = "Z" },
-		{ "zz", desc = "Align view center" },
-		{ "zt", desc = "Align view top" },
-		{ "zb", desc = "Align view bottom" },
+        { "[",         group = "Left Bracket" },
+        { "[d",        vim.diagnostic.goto_prev,  desc = "Goto previous diagnostic" },
 
-		{ "<leader>g", desc = "Debug" },
-	}
+        { "z",         group = "Z" },
+        { "zz",        desc = "Align view center" },
+        { "zt",        desc = "Align view top" },
+        { "zb",        desc = "Align view bottom" },
 
-	local n_only_kb_table = {
-		mode = "n",
-		{ "<leader>y", 'V"+y', desc = "Copy current line to clipboard" },
-		{ "<leader>p", '<cmd>set paste<cr>"+p<cmd>set nopaste<cr>', desc = "Paste from clipboard after cursor" },
-		{ "<leader>P", '<cmd>set paste<cr>"+P<cmd>set nopaste<cr>', desc = "Paste from clipboard before cursor" },
-	}
+        { "<leader>g", desc = "Debug" },
+    }
 
-	local v_only_kb_table = {
-		mode = "v",
-		{ "<leader>y", '"+y', desc = "Copy to clipboard" },
-	}
+    local n_only_kb_table = {
+        mode = "n",
+        { "<leader>y", 'V"+y',                                      desc = "Copy current line to clipboard" },
+        { "<leader>p", '<cmd>set paste<cr>"+p<cmd>set nopaste<cr>', desc = "Paste from clipboard after cursor" },
+        { "<leader>P", '<cmd>set paste<cr>"+P<cmd>set nopaste<cr>', desc = "Paste from clipboard before cursor" },
+    }
 
-	local i_only_kb_table = {
-		mode = "i",
-		{
-			"<C-o>",
-			function()
-				vim.cmd([[normal! o]])
-			end,
-			desc = "New line below",
-		},
-	}
+    local v_only_kb_table = {
+        mode = "v",
+        { "<leader>y", '"+y', desc = "Copy to clipboard" },
+    }
 
-	wk.add({
-		kb_table,
-		{ mode = "v", kb_table },
-		n_only_kb_table,
-		v_only_kb_table,
-		i_only_kb_table,
-	})
+    local i_only_kb_table = {
+        mode = "i",
+        {
+            "<C-o>",
+            function()
+                vim.cmd([[normal! o]])
+            end,
+            desc = "New line below",
+        },
+    }
+
+    wk.add({
+        kb_table,
+        { mode = "v", kb_table },
+        n_only_kb_table,
+        v_only_kb_table,
+        i_only_kb_table,
+    })
 end
 
 return {
-	pn.which_key,
-	priority = 0,
-	config = whichkey_config,
+    pn.which_key,
+    priority = 0,
+    config = whichkey_config,
 }

@@ -24,8 +24,8 @@ local function telescope_config()
 
 	local kb_table = {
 		{ "<leader>C", builtin.commands, desc = "Open command picker" },
-		{ "<leader>f", builtin.find_files, desc = "Open file picker" },
-		{ "<leader>F", builtin.git_files, desc = "Open Git file picker" },
+		{ "<leader>ff", builtin.find_files, desc = "Open file picker" },
+		{ "<leader>fF", builtin.git_files, desc = "Open Git file picker" },
 		{
 			"<leader>b",
 			function()

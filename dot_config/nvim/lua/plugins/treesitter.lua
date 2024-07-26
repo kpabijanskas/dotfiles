@@ -10,7 +10,7 @@ local function treesitter_config()
 			enable = true,
 			additional_vim_regex_highlighting = { "markdown" },
 		},
-		sync_install = false,
+		sync_install = true,
 		modules = {},
 	})
 end
