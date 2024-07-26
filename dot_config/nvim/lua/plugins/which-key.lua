@@ -58,6 +58,7 @@ local function whichkey_config()
         { "<leader>fQ", "<cmd>q!<cr>",                           desc = "Force Quit" },
         { "<leader>fx", "<cmd>x<cr>",                            desc = "Write file and quit" },
         { "<leader>fX", "<cmd>x!<cr>",                           desc = "Write! file and quit" },
+        { "<leader>fr", "<cmd bufdo e<cr>",                      desc = "Reread all buffers" },
 
         { "<leader>v",  group = "Vim keybindings" },
         {
