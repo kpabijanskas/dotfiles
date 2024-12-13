@@ -1,13 +1,10 @@
-{{- $vpnName := (rbwFields "work" "--folder" "Chezmoi").vpn_name.value -}}
-{{- $gitDomain := (rbwFields "work" "--folder" "Chezmoi").git_domain.value -}}
 # Path
 set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin {{ end }}$PATH
 
 # Aliases
+alias e="nvim"
 alias vi="nvim"
 alias vim="nvim"
-alias nvim="nvim"
-alias e="nvim"
 
 switch (uname)
     case Darwin
@@ -24,9 +21,6 @@ switch (uname)
         set -x HOMEBREW_NO_INSTALL_CLEANUP true
 
     case Linux
-        alias nlc="nordlayer connect {{ $vpnName }}"
-        alias nld="nordlayer disconnect"
-        alias nls="nordlayer status"
         alias dnf-up="sudo dnf update -y"
         alias flatpak-up="sudo flatpak update -y"
         alias flatpak-clear="sudo flatpak uninstall --unused -y"
@@ -117,6 +111,6 @@ direnv hook fish | source
 set -g -x EDITOR nvim
 set -x BAT_THEME Catppuccin-latte
 {{- if eq .chezmoi.os "linux" }}
-set -g -x GOPRIVATE {{ $gitDomain }}
 {{- end }}
-set -g -x ZK_NOTEBOOK_DIR ~/Nextcloud/notes
+
+[ -e $HOME/.config/fish/config.local.fish ]; and source $HOME/.config/fish/config.local.fish

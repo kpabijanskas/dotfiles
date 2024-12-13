@@ -7,6 +7,8 @@ local function telescope_config()
 
 	telescope.load_extension("fzf")
 	telescope.load_extension("dap")
+	telescope.load_extension("orgmode")
+	telescope.load_extension("chezmoi")
 
 	telescope.setup({
 		extensions = {
@@ -24,8 +26,8 @@ local function telescope_config()
 
 	local kb_table = {
 		{ "<leader>C", builtin.commands, desc = "Open command picker" },
-		{ "<leader>ff", builtin.find_files, desc = "Open file picker" },
-		{ "<leader>fF", builtin.git_files, desc = "Open Git file picker" },
+		{ "<leader>f", builtin.find_files, desc = "Open file picker" },
+		{ "<leader>FF", builtin.git_files, desc = "Open Git file picker" },
 		{
 			"<leader>b",
 			function()
@@ -49,6 +51,7 @@ local function telescope_config()
 		{ "<leader>h", builtin.lsp_references, desc = "Show symbol references" },
 		{ "<leader>vf", builtin.filetypes, desc = "Pick filetype" },
 		{ "<leader>vh", builtin.help_tags, desc = "Search vim help" },
+		{ "<leader>vc", telescope.extensions.chezmoi.find_files, desc = "Edit chezmoi files" },
 		{ "<leader>v?", builtin.commands, desc = "List available vim/plugin commands" },
 		{ "gd", builtin.lsp_definitions, desc = "Goto definition" },
 		{ "gy", builtin.lsp_type_definitions, desc = "Goto type definition" },
@@ -74,6 +77,8 @@ return {
 			pn.telescope_fzf_native,
 			pn.plenary,
 			pn.which_key,
+			pn.telescope_orgmode,
+			pn.chezmoi,
 		},
 		config = telescope_config,
 	},

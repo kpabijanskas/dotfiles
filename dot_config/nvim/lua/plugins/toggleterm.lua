@@ -23,14 +23,6 @@ local function toggleterm_config()
 			})
 		end,
 	})
-
-	local kb_table = {
-		{ "<leader>m", "<cmd>TermSelect<cr>", desc = "Select terminal if any" },
-	}
-	wk.add({
-		kb_table,
-		{ mode = "v", kb_table },
-	})
 end
 
 return {

@@ -1,67 +1,79 @@
 local pn = require("plugin_names")
 
 local function dap_config()
-	local dap = require("dap")
-	local dap_widgets = require("dap.ui.widgets")
+    local dap = require("dap")
+    local widgets = require("dap.ui.widgets")
+    local dvt = require("nvim-dap-virtual-text")
+    local dap_go = require("dap-go")
+    local telescope = require("telescope")
 
-	require("nvim-dap-virtual-text").setup({})
-	require("dap-go").setup({
-		dap_configurations = {
-			{
-				type = "go",
-				name = "Attach remote",
-				mode = "remote",
-				request = "attach",
-			},
-		},
-	})
-	-- require("telescope").load_extension("dap")
+    dvt.setup()
+    dap_go.setup()
 
-	local wk = require("which-key")
-	local kb_table = {
-		{ "<leader>gr", dap.run_last, desc = "Restart last debugging session" },
-		{ "<leaer>gb", dap.toggle_breakpoint, desc = "Toggle breakpoint" },
-		{ "<leaer>gc", dap.continue, desc = "Launch/Continue DAP" },
-		{ "<leaer>gi", dap.step_into, desc = "Step Into" },
-		{ "<leaer>go", dap.step_out, desc = "Step out" },
-		{ "<leaer>gn", dap.step_over, desc = "Step over" },
-		{
-			"<leaer>gv",
-			function()
-				dap_widgets.centered_float(dap_widgets.scopes)
-			end,
-			desc = "Show scopes",
-		},
-		{ "<leaer>gt", dap.terminate, desc = "Terminate session" },
-		{
-			"<leaer>gf",
-			function()
-				dap_widgets.centered_float(dap_widgets.frames)
-			end,
-			desc = "Show Frames",
-		},
-		{ "<leaer>ge", dap.repl.open, desc = "Open repl" },
-		{ "<leaer>gh", dap_widgets.hover, desc = "Hover" },
-		{
-			"<leaer>ga",
-			function()
-				dap_widgets.centered_float(dap_widgets.threads)
-			end,
-			desc = "Show threads",
-		},
-	}
-	wk.add({
-		{ mode = "n", kb_table },
-		{ mode = "b", kb_table },
-	})
+    local wk = require("which-key")
+    local kb_table = {
+        {
+            "<leader>gr",
+            dap.run_last,
+            desc = "Restart last debugging session",
+        },
+        { "<leader>gb", dap.toggle_breakpoint, desc = "Toggle breakpoint" },
+        { "<leader>gc", dap.continue,          desc = "Continue" },
+        { "<leader>gi", dap.step_into,         desc = "Step Into" },
+        { "<leader>go", dap.step_out,          desc = "Step out" },
+        { "<leader>gn", dap.step_over,         desc = "Step over" },
+        {
+            "<leader>gl",
+            function()
+                telescope.extensions.dap.list_breakpoints()
+            end,
+            desc = "List breakpoints",
+        },
+        {
+            "<leader>gr",
+            function()
+                telescope.extensions.dap.configurations()
+            end,
+            desc = "Configurations",
+        },
+        {
+            "<leader>gv",
+            function()
+                widgets.centered_float(widgets.scopes)
+            end,
+            desc = "Show scopes",
+        },
+        { "<leader>gt", dap.terminate, desc = "Terminate session" },
+        {
+            "<leader>gf",
+            function()
+                widgets.centered_float(widgets.frames)
+            end,
+            desc = "Show Frames",
+        },
+        { "<leader>ge", dap.repl.open, desc = "Open repl" },
+        { "<leader>gh", widgets.hover, desc = "Hover" },
+        {
+            "<leader>ga",
+            function()
+                widgets.centered_float(widgets.threads)
+            end,
+            desc = "Show threads",
+        },
+    }
+    wk.add({
+        { mode = "n", kb_table },
+        { mode = "v", kb_table },
+    })
 end
 
 return {
-	pn.dap,
-	dependencies = {
-		pn.dap_virtual_text,
-		pn.dap_go,
-		pn.telescope_dap,
-	},
-	config = dap_config,
+    pn.dap,
+    dependencies = {
+        pn.dap_virtual_text,
+        pn.dap_go,
+        pn.telescope_dap,
+        pn.telescope,
+    },
+    config = dap_config,
 }

@@ -21,6 +21,7 @@ local function cmp_config()
 		sources = {
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
+			{ name = "orgmode" },
 		},
 		window = {
 			completion = {
@@ -87,14 +88,14 @@ end
 
 return {
 	{
-		pn.nvim_cmp,
+		pn.cmp,
 		dependencies = {
-			pn.nvim_lspconfig,
+			pn.lspconfig,
 			pn.cmp_nvim_lsp,
 			pn.cmp_buffer,
 			pn.cmp_path,
 			pn.cmp_cmdline,
-			pn.nvim_autopairs,
+			pn.autopairs,
 			pn.luasnip,
 			pn.cmd_luasnip,
 			pn.lspkind,

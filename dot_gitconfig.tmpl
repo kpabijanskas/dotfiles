@@ -1,31 +1,34 @@
 {{- $personalEmail := (rbw "personal_email" "--folder" "Chezmoi").data.username -}}
 {{- $workGitDomain := (rbwFields "work" "--folder" "Chezmoi").git_domain.value -}}
-{{- $username := (rbwFields "work" "--folder" "Chezmoi").git_http_username.value -}}
-{{- $password := (rbwFields "work" "--folder" "Chezmoi").git_http_password.value -}}
-{{- $giteaUsername := (rbwFields "gitea" "--folder" "Machines on Mac Mini").user.value -}}
-{{- $giteaToken := (rbwFields "gitea" "--folder" "Machines on Mac Mini").token.value -}}
-{{- $giteaURI := (index (rbw "gitea" "--folder" "Machines on Mac Mini").data.uris 0).uri -}}
 [push]
     autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+[diff]
+    tool = difftastic
+
+[difftool]
+    prompt = false
+
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+    difftool = true
+
+[alias]
+    dft = difftool
 
 [user]
     name = Karolis Pabijanskas
     email = {{ $personalEmail }}
 
-{{ if eq .chezmoi.os "linux" }}
-[includeIf "gitdir:~/repos/{{ $workGitDomain }}/"]
+{{ if ne $workGitDomain "" -}}
+[includeIf "hasconfig:remote.*.url:https://{{ $workGitDomain }}"]
     path = ~/.gitconfig-work
 
-[includeIf "gitdir:~/workspaces/"]
+[includeIf "hasconfig:remote.*.url:git://{{ $workGitDomain }}"]
     path = ~/.gitconfig-work
-
-[url "git@{{ $workGitDomain }}:"]
-    insteadOf = "https://{{ $workGitDomain }}/"
 {{- end }}
-
-[url "https://{{ $giteaUsername }}:{{ $giteaToken }}@{{ $giteaURI }}/"]
-    insteadOf = "https://{{ $giteaURI }}/"
-    insteadOf = "git@{{ $giteaURI }}:"
-
-[pull]
-    rebase = true

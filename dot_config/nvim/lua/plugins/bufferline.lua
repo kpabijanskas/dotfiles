@@ -3,7 +3,7 @@ local pn = require("plugin_names")
 return {
 	pn.bufferline,
 	dependencies = {
-		pn.nvim_web_devicons,
+		pn.web_devicons,
 	},
 	opts = {
 		options = {

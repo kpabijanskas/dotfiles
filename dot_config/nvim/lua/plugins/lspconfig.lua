@@ -40,28 +40,38 @@ local function lspconfig_config()
 		filetypes = { "marksman" },
 	})
 
+	lspconfig.pyright.setup({})
+
 	lspconfig.clangd.setup({})
 
 	lspconfig.bashls.setup({})
-
-	lspconfig.bufls.setup({})
 
 	lspconfig.nil_ls.setup({})
 
 	lspconfig.yamlls.setup({})
 
-	lspconfig.bufls.setup({})
+	lspconfig.buf_ls.setup({})
+
+	lspconfig.gopls.setup({})
+
+	lspconfig.ts_ls.setup({})
 
 	wk.add({
-		{ "gD", vim.lsp.buf.declaration, desc = "Goto declaration" },
-		{ "<leader>a", vim.lsp.buf.code_action, desc = "Perform code action" },
-		{ "<leader>k", vim.lsp.buf.hover, desc = "Show docs for item under cursor" },
-		{ "<leader>r", vim.lsp.buf.rename, desc = "Rename symbol" },
+		{ "<leader>a", vim.lsp.buf.code_action, desc = "perform code action" },
+		{ "<leader>k", vim.lsp.buf.hover, desc = "show docs for item under cursor" },
+		{ "<leader>r", vim.lsp.buf.rename, desc = "rename symbol" },
+	})
+
+	wk.add({
+		mode = "v",
+		{
+			{ "<leader>a", vim.lsp.buf.code_action, desc = "perform code action" },
+		},
 	})
 end
 
 return {
-	pn.nvim_lspconfig,
+	pn.lspconfig,
 	config = lspconfig_config,
 	dependencies = {
 		pn.nvim_cmp,

@@ -3,7 +3,8 @@ local pn = require("plugin_names")
 return {
 	pn.projectconfig,
 	dependencies = {
-		pn.nvim_notify,
+		pn.notify,
+		pn.dap,
 	},
 	opts = {
 		autocmd = true,

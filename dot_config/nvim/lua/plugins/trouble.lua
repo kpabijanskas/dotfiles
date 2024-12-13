@@ -37,7 +37,7 @@ end
 return {
 	pn.trouble,
 	dependencies = {
-		pn.nvim_web_devicons,
+		pn.web_devicons,
 	},
 	config = trouble_config,
 }

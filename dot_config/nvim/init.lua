@@ -1,6 +1,6 @@
 -- Leader should be set near the top
 vim.g.mapleader = " "
-vim.g.maplocalleader = "  "
+vim.g.maplocalleader = ","
 
 -- Disable loading netrw
 vim.g.loaded_netrw = 1
@@ -25,6 +25,8 @@ vim.o.smarttab = true
 
 -- Smart indenting
 vim.o.smartindent = true
+
+vim.o.termguicolors = true
 
 -- Line numbers
 vim.o.relativenumber = true
@@ -53,13 +55,6 @@ vim.o.wildoptions = "pum"
 --   - Show menhu when only one option
 --   - Don't select an option automatically, let me do that
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
--- Folding
-vim.o.foldmethod = "syntax"
--- Always start folder, otherwise I forget they exist
-vim.o.foldlevel = 1
-vim.o.foldlevelstart = 1
-vim.o.foldcolumn = "4"
 
 -- Don't give ins-completion-menu messages
 vim.opt.shortmess:append("c")
@@ -112,3 +107,6 @@ vim.keymap.set({ "n", "i", "x" }, "<right>", "<nop>", {})
 
 -- Disable F1
 vim.keymap.set({ "n", "i", "x", "v" }, "<F1>", "<nop>", {})
+
+-- colorscheme
+vim.cmd.colorscheme("tokyonight-day")

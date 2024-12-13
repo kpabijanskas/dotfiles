@@ -9,6 +9,7 @@ set easymotion
 set textobj-entire
 set ReplaceWithRegister
 set which-key
+set NERDTree
 
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
@@ -32,6 +33,9 @@ set idearefactormode=keep
 let g:WhichKey_DefaultDelay = 0
 
 """ Mappings --------------------------------
+
+nmap <C-w>x <Action>(CloseContent)
+let g:WhichKeyDesc_Cw_x = "<C-w>x Close File"
 
 " ---> <leader>
 nmap <leader>! <Action>(ActivateTerminalToolWindow)
@@ -82,6 +86,9 @@ let g:WhichKeyDesc_leader_N = "<leader>N Rename Bookmark"
 nmap <leader>o <Action>(InsertLiveTempalte)
 let g:WhichKeyDesc_leader_o = "<leader>o Insert Live Template"
 
+nmap <leader>p <Action>(ManageRecentProjects)
+let g:WhichKeyDesc_leader_p = "<leader>p Recent Projects"
+
 nmap <leader>q <Action>(FileStructurePopup)
 let g:WhichKeyDesc_leader_q = "<leader>q File Structure"
 
@@ -102,9 +109,6 @@ let g:WhichKeyDesc_leader_V = "<leader>V Unwrap"
 
 nmap <leader>x <Action>(ToggleLineBreakpoint)
 let g:WhichKeyDesc_leader_x = "<leader>x Toggle Breakpoint"
-
-nmap <leader>X <Action>(CloseContent)
-let g:WhichKeyDesc_leader_X = "<leader>X Close File"
 
 " --> <leader>g
 let g:WhichKeyDesc_leader_g = "<leader>g VCS Operations"

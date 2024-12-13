@@ -1,7 +1,8 @@
 [[language]]
 name = "go"
 auto-format = true
-formatter = { command = "goimports" }
+formatter = { command = "go_format.sh" }
+language-servers = [  { name = "gopls", except-features = ["workspace-command"]}, "execlsp-go" ]
 
 [[language]]
 name = "html"
@@ -50,7 +51,7 @@ indent = { tab-width = 4, unit = " " }
 
 [[language]]
 name = "markdown"
-language-servers = [ "zk", "marksman" ]
+language-servers = [ {name="zk", except-features=["workspace-command"]}, "marksman", "execlsp-zk" ]
 indent = { tab-width = 2, unit = " " }
 
 [language-server.zk]
@@ -59,3 +60,15 @@ args = ["lsp"]
 
 [language-server.marksman]
 command = "marksman"
+
+[language-server.execlsp-go]
+command = "execlsp"
+args = ["-presets", "go"]
+
+[language-server.execlsp-zk]
+command = "execlsp"
+args = ["-presets", "zk"]
+
+[language-server.gopls.config]
+"formatting.gofumpt" = true
+

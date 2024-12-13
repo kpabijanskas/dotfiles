@@ -1,4 +1,0 @@
-{{- $domain := (rbwFields "work" "--folder" "Chezmoi").git_domain.value -}}
-{{- $username := (rbwFields "work" "--folder" "Chezmoi").git_http_username.value -}}
-{{- $password := (rbwFields "work" "--folder" "Chezmoi").git_http_password.value -}}
-machine {{ $domain }} login {{ $username }} password {{ $password }}
