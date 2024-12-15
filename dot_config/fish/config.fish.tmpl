@@ -1,5 +1,5 @@
 # Path
-set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin {{ end }}$PATH
+set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin {{ end }}$PATH
 
 # Aliases
 alias e="nvim"

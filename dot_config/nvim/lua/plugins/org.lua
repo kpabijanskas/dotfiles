@@ -10,6 +10,7 @@ local file_basenames = {
     areas = "areas",
     resources = "resources",
     personal = "personal",
+    shopping = "shopping",
 }
 
 local work_datetree = {
@@ -176,6 +177,7 @@ local function orgmode_config()
             orgPath(file_basenames.areas),
             orgPath(file_basenames.resources),
             orgPath(file_basenames.personal),
+            orgPath(file_basenames.shopping),
         },
         org_default_notes_file = orgPath(file_basenames.inbox),
         org_todo_keywords = {
@@ -196,6 +198,7 @@ local function orgmode_config()
         org_log_done = "note",
         org_log_repeat = "time",
         org_log_into_drawer = "STATE_CHANGES",
+        win_split_mode = { "float", "0.8" },
         calendar_week_start_day = 1,
         org_deadline_warning_days = 14,
         org_agenda_span = "week",

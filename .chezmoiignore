@@ -12,4 +12,5 @@ bin/update_containers.sh
 .netrc
 {{- end }}
 .config/nvim/projects/*
+.config/nvim/lazy-lock.json
 .config/fish/config.local.fish
