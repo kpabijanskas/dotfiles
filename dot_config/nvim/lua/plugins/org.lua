@@ -13,7 +13,7 @@ local file_basenames = {
     shopping = "shopping",
 }
 
-local work_datetree = {
+local datetree = {
     reversed = true,
     tree_type = "custom",
     tree = {
@@ -35,7 +35,7 @@ local work_datetree = {
         {
             format = "%Y-%m-%d %A",
             pattern = "^(%d%d%d%d)%-(%d%d)%-(%d%d).*$",
-            order = { 1, 2, 3 },
+            order = { 1, 2, 3, 4 },
         },
     },
 }
@@ -172,7 +172,6 @@ local function orgmode_config()
         org_agenda_files = {
             orgPath(file_basenames.inbox),
             orgPath(file_basenames.work_log),
-            orgPath(file_basenames.journal),
             orgPath(file_basenames.projects),
             orgPath(file_basenames.areas),
             orgPath(file_basenames.resources),
@@ -364,8 +363,17 @@ local function orgmode_config()
             w = {
                 description = "WORK TODAY: Task",
                 template = "* UNPROCESSED  %?\n %u",
-                datetree = work_datetree,
+                datetree = datetree,
                 target = orgPath(file_basenames.work_log),
+                properties = {
+                    empty_lines = 1,
+                },
+            },
+            j = {
+                description = "Journal",
+                template = "* %<%H:%M>\n  %?",
+                datetree = datetree,
+                target = orgPath(file_basenames.journal),
                 properties = {
                     empty_lines = 1,
                 },
@@ -373,7 +381,7 @@ local function orgmode_config()
             e = {
                 description = "WORK TODAY: Note",
                 template = "* %?\n  %u",
-                datetree = work_datetree,
+                datetree = datetree,
                 target = orgPath(file_basenames.work_log),
                 properties = {
                     empty_lines = 1,
@@ -382,7 +390,7 @@ local function orgmode_config()
             m = {
                 description = "WORK TODAY: Meeting",
                 template = "* UNPROCESSED MEETING %U %^{Meeting Name?} :MEETING:\n  %?",
-                datetree = work_datetree,
+                datetree = datetree,
                 target = orgPath(file_basenames.work_log),
                 properties = {
                     empty_lines = 1,
