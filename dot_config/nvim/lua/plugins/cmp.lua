@@ -22,6 +22,7 @@ local function cmp_config()
 			{ name = "nvim_lsp" },
 			{ name = "luasnip" },
 			{ name = "orgmode" },
+            { name = "lazydev", group_index = 0}
 		},
 		window = {
 			completion = {

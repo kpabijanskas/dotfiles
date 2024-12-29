@@ -1,42 +1,40 @@
+# -*- mode: web -*-
 # Path
-set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin {{ end }}$PATH
+set -x PATH ~/bin ~/go/bin ~/.cargo/bin ~/.npm-global/bin/ ~/.local/bin/ ~/.emacs.d/bin {{ if eq .chezmoi.os "darwin" }} /opt/homebrew/bin /opt/homebrew/opt/coreutils/libexec/gnubin /opt/homebrew/opt/grep/libexec/gnubin {{ end }} $PATH
 
 # Aliases
 alias e="nvim"
 alias vi="nvim"
 alias vim="nvim"
 
-switch (uname)
-    case Darwin
-        set -gx HOMEBREW_NO_ENV_HINTS true
-        function brew-up
-            brew update
-            brew upgrade
-        end
+{{ if eq .chezmoi.os "darwin" }}
+set -gx HOMEBREW_NO_ENV_HINTS true
+set -x HOMEBREW_NO_INSTALL_CLEANUP true
 
-        function up
-            echo ">>>> Updating Homebrew"
-            brew-up
-        end
-
-        set -x HOMEBREW_NO_INSTALL_CLEANUP true
-
-    case Linux
-        alias dnf-up="sudo dnf update -y"
-        alias flatpak-up="sudo flatpak update -y"
-        alias flatpak-clear="sudo flatpak uninstall --unused -y"
-        function up
-            echo ">>>> Updating DNF"
-            dnf-up
-            echo
-            echo ">>>> Updating FlatPak"
-            flatpak-up
-            echo
-            echo ">>>> Clearing Unused Flatpak"
-            flatpak-clear
-        end
+function brew-up
+    brew update
+    brew upgrade
 end
 
+function up
+    echo ">>>> Updating Homebrew"
+    brew-up
+end
+{{ else }}
+alias dnf-up="sudo dnf update -y"
+alias flatpak-up="sudo flatpak update -y"
+alias flatpak-clear="sudo flatpak uninstall --unused -y"
+function up
+    echo ">>>> Updating DNF"
+    dnf-up
+    echo
+    echo ">>>> Updating FlatPak"
+    flatpak-up
+    echo
+    echo ">>>> Clearing Unused Flatpak"
+    flatpak-clear
+end
+{{ end }}
 
 
 if status is-interactive

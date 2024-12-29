@@ -9,7 +9,6 @@ local file_basenames = {
     projects = "projects",
     areas = "areas",
     resources = "resources",
-    personal = "personal",
     shopping = "shopping",
 }
 
@@ -60,14 +59,15 @@ local function format_orgmode_action(actions, ...)
     return o
 end
 
-local function agenda()
+local function customAgenda()
     local pick = require("lib.pick")
     local oa = require("orgmode").agenda
     local f = require("orgmode.agenda.filter")
+    local oapi = require('orgmode.api.agenda')
 
     local function wrap_search(query)
         return function()
-            oa:tags({ search = query })
+            oapi:tags({ search = query, noninteractive = true })
         end
     end
 
@@ -175,7 +175,7 @@ local function orgmode_config()
             orgPath(file_basenames.projects),
             orgPath(file_basenames.areas),
             orgPath(file_basenames.resources),
-            orgPath(file_basenames.personal),
+            orgPath(file_basenames.journal),
             orgPath(file_basenames.shopping),
         },
         org_default_notes_file = orgPath(file_basenames.inbox),
@@ -183,7 +183,7 @@ local function orgmode_config()
             "UNPROCESSED(u)",
             "BUY(b)",
             "TODO(t)",
-            "DOING(d)",
+            "SELECTED(s)",
             "WAITING(w)",
             "|",
             "DONE(x)",
@@ -204,7 +204,7 @@ local function orgmode_config()
         org_agenda_start_on_weekday = false,
         org_agenda_start_day = "-2d",
         org_use_tag_inheritance = true,
-        org_tags_exclude_from_inheritance = { "PROJECT" },
+        org_tags_exclude_from_inheritance = { "PROJECT", "GOAL" },
         mappings = {
             prefix = "",
             global = {
@@ -387,6 +387,15 @@ local function orgmode_config()
                     empty_lines = 1,
                 },
             },
+            b = {
+                description = "Add to shopping list",
+                template = "* BUY %?",
+                datetree = datetree,
+                target = orgPath(file_basenames.shopping),
+                properties = {
+                    empty_lines = 0,
+                },
+            },
             m = {
                 description = "WORK TODAY: Meeting",
                 template = "* UNPROCESSED MEETING %U %^{Meeting Name?} :MEETING:\n  %?",
@@ -395,7 +404,6 @@ local function orgmode_config()
                 properties = {
                     empty_lines = 1,
                 },
-            },
         },
     })
 
@@ -409,7 +417,7 @@ local function orgmode_config()
         },
         {
             "<leader>os",
-            agenda,
+            customAgenda,
             desc = "Custom Agenda Searches",
         },
     }

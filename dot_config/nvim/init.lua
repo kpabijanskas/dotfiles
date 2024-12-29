@@ -80,13 +80,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
 	checker = {
-		enabled = true,
-		notify = false,
-		frequency = 86400, -- once a day
+		enabled = false,
 	},
 	change_detection = {
 		notify = false,
 	},
+    dev = {
+        path = "~/repos/github.com/kpabijanskas"
+    }
 })
 
 -- Perl-style regex by default
