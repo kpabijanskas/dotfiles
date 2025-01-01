@@ -123,29 +123,62 @@
    org-agenda-start-on-weekday nil
    org-agenda-start-day "-2d"
    org-use-tag-inheritance t
-   org-tags-exclude-from-inheritance '("PROJECT" "GOAL")
+   org-tags-exclude-from-inheritance '("project" "goal" "active")
    org-refile-targets '((nil :maxlevel . 9)
                         (org-agenda-files :maxlevel . 9))
    org-refile-target-verify-function 'kp/verify-refile-target
    org-refile-use-outline-path t
    org-capture-templates '(("t" "Todo" entry (file "inbox.org")
-                            "* UNPROCESSED %?\n  %U")
+                            "* UNPROCESSED %?")
                            ("r" "Store from clipboard" entry (file "inbox.org")
-                            "* UNPROCESSED %(evil-paste-after 0)\n  %U" :immediate-finish t) ;; evil-paste-after as '%x' does not work in macos
+                            "* UNPROCESSED %(evil-paste-after 0)" :immediate-finish t) ;; evil-paste-after as '%x' does not work in macos
                            ("n" "Note" entry (file "inbox.org")
-                            "* %?\n  %U")
+                            "* %?")
 
                            ("w" "Work")
                            ("wt" "WORK TODAY: Todo" entry (file+function "work_log.org" org-reverse-datetree-goto-date-in-file)
-                            "* SELECTCTED %?\n  %u")
+                            "* SELECTCTED %?")
                            ("wn" "WORK TODAY: Note" entry (file+function "work_log.org" org-reverse-datetree-goto-date-in-file)
-                            "* %?\n  %u")
+                            "* %?")
                            ("wm" "WORK TODAY: Meeting" entry (file+function "work_log.org" org-reverse-datetree-goto-date-in-file)
-                            "* MEETING %U %^{Meeting Name?} :MEETING:\n  %?\n")
+                            "* MEETING %U %^{Meeting Name?} :MEETING:
+%?")
 
                            ("j" "Journal")
                            ("jj" "Standard entry" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M>\n  %?")
+                            "* %<%H-%M>
+%?")
+                           ("jr" "Reframe" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> This has happened: ^{What happened?}. How is this the best thing that ever happened to me?
+%?")
+                           ("jp" "Posibilities" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> I am %?, because of
+- ")
+                           ("ji" "Inversion" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> $?")
+                           ("je" "Perspective" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> $?")
+                           ("jx" "How would someone else solve this?" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> %?")
+                           ("jt" "30 ideas in 5 minutes" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> %?
+- ")
+                           ("jg" "Gratitude" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> 3 things I am grateful for today
+1.
+2.
+3. ")
+                           ("js" "Progress" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> Progress Questions
+** What excited me today?
+%?
+** What drained me today?
+
+** What did I learn today?
+")
+                           ("jw" "Weekly Review" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
+                            "* %<%H-%M> Weekly Review
+** Am I moving closer or further from my goals?")
 
                            ("b" "Add to shopping list" entry (file "shopping.org")
                             "* BUY %?"))
@@ -157,13 +190,34 @@
                                                                      (org-agenda-overriding-header "Project list")
                                                                      (org-agenda-prefix-format " %-22c | %-12s ")
                                                                      (org-agenda-remove-tags "t")))
-                                ("g" "Goals list" tags "+GOAL" ((org-agenda-overriding-header "Goals list")))))
+                                ("g" "Goals list" tags "+GOAL" ((org-agenda-overriding-header "Goals list")))
+                                ("z" "Personal Agenda" ((agenda)
+                                                        (org-ql-block '(and (habit) (scheduled :on today))
+                                                                      ((org-ql-block-header "Habits")))
+                                                        (tags "+project+active-work" ((org-agenda-overriding-header "Active Projects")))
+                                                        (org-ql-block '(and (todo "NEXT") (ancestors (and (todo "PROJECT") (tags "active") (not (tags "work")))))
+                                                                      ((org-ql-block-header "Project next actions")
+                                                                       (org-agenda-prefix-format " %-22c | %-12s ")))
+                                                        (org-ql-block '(and (not (ancestors (todo "PROJECT"))) (todo "NEXT") (not (tags "work")))
+                                                                      ((org-ql-block-header "One-off next actions")))
+                                                        (org-ql-block '(and (todo "PROJECT") (not (tags "work")) (not (descendants (todo "NEXT"))))
+                                                                      ((org-ql-block-header "Stuck Projects")))
+                                                        (org-ql-block '(and (not (ancestors (todo "PROJECT"))) (todo "TODO") (not (habit)) (not (tags "work")))
+                                                                      ((org-ql-block-header "Other one-off tasks")))))
+                                ("x" "Work Agenda" ((agenda)
+                                                    (tags "+project+active+work" ((org-agenda-overriding-header "Active Projects")))
+                                                    (org-ql-block '(and (todo "NEXT") (ancestors (and (todo "PROJECT") (tags "active") (tags "work"))))
+                                                                  ((org-ql-block-header "Project next actions")
+                                                                   (org-agenda-prefix-format " %-22c | %-12s ")))
+                                                    (org-ql-block '(and (not (ancestors (todo "PROJECT"))) (todo "NEXT") (tags "work"))
+                                                                  ((org-ql-block-header "One-off next actions")))
+                                                    (org-ql-block '(and (todo "PROJECT") (tags "work") (not (descendants (todo "NEXT"))))
+                                                                  ((org-ql-block-header "Stuck Projects")))
+                                                    (org-ql-block '(and (not (ancestors (todo "PROJECT"))) (todo "TODO") (tags "work"))
+                                                                  ((org-ql-block-header "Other one-off tasks")))))))
   (add-hook! org-mode 'auto-save-mode)
   (add-hook! 'auto-save-hook 'org-save-all-org-buffers)
   (add-hook! 'org-todo-repeat-hook 'org-reset-checkbox-state-subtree)) ;; for some reason, org-checkbox does not work
-
-
-
 
 
 (defun kp/run-command-runner-empty (command-line name output-buffer) nil)
@@ -200,3 +254,10 @@
 (map! :leader
       :desc "Universal Argument" "U" #'universal-argument ;; Moved
       :desc "Run Command" "u" #'run-command)
+
+(use-package! web-mode
+  :config
+  (setq web-mode-engines-alist
+        '(("php"    . "\\\\.phtml\\\\\\='")
+          ("blade"  . "\\\\.blade\\\\.")
+          ("go" . "\\\\.tmpl\\\\."))))
