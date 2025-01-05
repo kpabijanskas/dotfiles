@@ -1,79 +1,13 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Karolis Pabijanskas"
-      user-mail-address "karolis@pabijanskas.lt")
+      user-mail-address "karolis@pabijanskas.lt"
+      doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
+      catppuccin-flavor 'latte
+      doom-theme 'doom-nord-light
+      display-line-numbers-type 'visual
+      shell-file-name (executable-find "bash"))
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-;; (setq doom-font (font-spec :family "JetBrains Mono Nerd Font" :size 12))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq catppuccin-flavor 'latte)
-(setq doom-theme 'catppuccin)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'visual)
-
-
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-(setq shell-file-name (executable-find "bash"))
 (setq-default vterm-shell (executable-find "fish"))
 
 (use-package! org-ql
@@ -87,8 +21,8 @@
   :config
   (setq-default org-reverse-datetree-level-formats
                 '("%Y"
-                  (lambda (time) (format-time-string "%Y-%m %B" (org-reverse-datetree-monday time)))
-                  "%Y-%m W%W"
+                  "%Y-%m %B"
+                  "%Y-%m W%V"
                   "%Y-%m-%d %A"))
   (setq
    org-modules '(org-habit)
@@ -146,39 +80,39 @@
 
                            ("j" "Journal")
                            ("jj" "Standard entry" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M>
-%?")
+                            "* %<%H:%M>
+%?" :prepend t)
                            ("jr" "Reframe" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> This has happened: ^{What happened?}. How is this the best thing that ever happened to me?
-%?")
+                            "* %<%H:%M> This has happened: ^{What happened?}. How is this the best thing that ever happened to me?
+%?" :prepend t)
                            ("jp" "Posibilities" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> I am %?, because of
-- ")
+                            "* %<%H:%M> I am %?, because of
+- " :prepend t)
                            ("ji" "Inversion" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> $?")
+                            "* %<%H:%M> %?" :prepend t)
                            ("je" "Perspective" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> $?")
+                            "* %<%H:%M> %?" :prepend t)
                            ("jx" "How would someone else solve this?" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> %?")
+                            "* %<%H:%M> %?" :prepend t)
                            ("jt" "30 ideas in 5 minutes" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> %?
-- ")
+                            "* %<%H:%M> %?
+- " :prepend t)
                            ("jg" "Gratitude" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> 3 things I am grateful for today
+                            "* %<%H:%M> 3 things I am grateful for today
 1.
 2.
-3. ")
+3. " :prepend t)
                            ("js" "Progress" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> Progress Questions
+                            "* %<%H:%M> Progress Questions
 ** What excited me today?
 %?
 ** What drained me today?
 
 ** What did I learn today?
-")
+" :prepend t)
                            ("jw" "Weekly Review" entry (file+function "journal.org" org-reverse-datetree-goto-date-in-file)
-                            "* %<%H-%M> Weekly Review
-** Am I moving closer or further from my goals?")
+                            "* %<%H:%M> Weekly Review
+** Am I moving closer or further from my goals?" :prepend t)
 
                            ("b" "Add to shopping list" entry (file "shopping.org")
                             "* BUY %?"))
@@ -186,13 +120,13 @@
                                 ("p" "Planning list" todo "UNPROCESSED|TODO|NEXT" ((org-agenda-sorting-strategy '(todo-state-up deadline-up scheduled-up priority-up))
                                                                                    (org-agenda-overriding-header "Planning list")
                                                                                    (org-agenda-prefix-format " %-22c %-12t %?-4e %-60b ")))
-                                ("r" "Project list" tags "+PROJECT" ((org-agenda-sorting-strategy '(priority-up deadline-up scheduled-up))
+                                ("r" "Project list" tags "+project" ((org-agenda-sorting-strategy '(priority-up deadline-up scheduled-up))
                                                                      (org-agenda-overriding-header "Project list")
                                                                      (org-agenda-prefix-format " %-22c | %-12s ")
                                                                      (org-agenda-remove-tags "t")))
-                                ("g" "Goals list" tags "+GOAL" ((org-agenda-overriding-header "Goals list")))
+                                ("g" "Goals list" tags "+goal" ((org-agenda-overriding-header "Goals list")))
                                 ("z" "Personal Agenda" ((agenda)
-                                                        (org-ql-block '(and (habit) (scheduled :on today))
+                                                        (org-ql-block '(and (habit) (scheduled :to today))
                                                                       ((org-ql-block-header "Habits")))
                                                         (tags "+project+active-work" ((org-agenda-overriding-header "Active Projects")))
                                                         (org-ql-block '(and (todo "NEXT") (ancestors (and (todo "PROJECT") (tags "active") (not (tags "work")))))
@@ -218,7 +152,6 @@
   (add-hook! org-mode 'auto-save-mode)
   (add-hook! 'auto-save-hook 'org-save-all-org-buffers)
   (add-hook! 'org-todo-repeat-hook 'org-reset-checkbox-state-subtree)) ;; for some reason, org-checkbox does not work
-
 
 (defun kp/run-command-runner-empty (command-line name output-buffer) nil)
 
@@ -253,7 +186,11 @@
 
 (map! :leader
       :desc "Universal Argument" "U" #'universal-argument ;; Moved
-      :desc "Run Command" "u" #'run-command)
+      :desc "Run Command" "u" #'run-command
+      :desc "Pop up scratch window" "X" #'doom/open-scratch-buffer ;; Moved
+      :desc "Org Capture" "x" #'org-capture                        ;; Moved
+      :desc "Org Agenda" "z" #'org-agenda)
+
 
 (use-package! web-mode
   :config
@@ -261,3 +198,7 @@
         '(("php"    . "\\\\.phtml\\\\\\='")
           ("blade"  . "\\\\.blade\\\\.")
           ("go" . "\\\\.tmpl\\\\."))))
+
+(require 'dap-dlv-go)
+(require 'dap-php)
+(dap-php-setup)
