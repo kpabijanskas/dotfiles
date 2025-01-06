@@ -3,7 +3,7 @@
 (load "~/.config/doom/secrets.el")
 
 (setq user-full-name "Karolis Pabijanskas"
-      user-mail-address "karolis@pabijanskas.lt"
+      user-mail-address (kp/get_secret "personal_email")
       doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
       catppuccin-flavor 'latte
       doom-theme 'doom-nord-light
@@ -180,7 +180,7 @@
              :command-line "")))))
 
 (use-package! run-command
-  :ensure t
+  :defer
   :config
   (setq run-command-default-runner 'run-command-runner-vterm
         run-command-selector 'run-command-selector-completing-read
@@ -202,7 +202,8 @@
           ("go" . "\\\\.tmpl\\\\."))))
 
 (use-package! exercism
-  :ensure t
+  :defer
+  :commands (exercism)
   :config
   (setq exercism--workspace "~/workspaces/exercism/"))
 
@@ -213,6 +214,4 @@
   (require 'dap-php)
   (dap-php-setup))
 
-(use-package! go
-  :config
-  (require 'dap-dlv-go))
+(require 'dap-dlv-go)
