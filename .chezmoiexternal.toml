@@ -1,0 +1,10 @@
+["bin/dbgpClient"]
+  type = "file"
+
+{{- if eq .chezmoi.os "darwin" }}
+  url = "https://xdebug.org/files/binaries/dbgpClient-macos-arm64"
+{{- else }}
+  url = "https://xdebug.org/files/binaries/dbgpClient"
+{{- end }}
+  refreshPeriod = "168h"
+  executable = true
