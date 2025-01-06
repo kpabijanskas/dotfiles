@@ -209,9 +209,9 @@
 
 (use-package! php
   :init
-  (setq lsp-intelephense-licence-key (kp/get_secret "intelephense_key"))
-  :config
-  (require 'dap-php)
-  (dap-php-setup))
+  (setq lsp-intelephense-licence-key (kp/get_secret "intelephense_key")))
+
 
 (require 'dap-dlv-go)
+(require 'dap-php)
+(dap-php-setup)
