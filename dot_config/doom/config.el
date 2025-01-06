@@ -1,5 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(load "~/.config/doom/secrets.el")
+
 (setq user-full-name "Karolis Pabijanskas"
       user-mail-address "karolis@pabijanskas.lt"
       doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
@@ -199,6 +201,18 @@
           ("blade"  . "\\\\.blade\\\\.")
           ("go" . "\\\\.tmpl\\\\."))))
 
-(require 'dap-dlv-go)
-(require 'dap-php)
-(dap-php-setup)
+(use-package! exercism
+  :ensure t
+  :config
+  (setq exercism--workspace "~/workspaces/exercism/"))
+
+(use-package! php
+  :init
+  (setq lsp-intelephense-licence-key (kp/get_secret "intelephense_key"))
+  :config
+  (require 'dap-php)
+  (dap-php-setup))
+
+(use-package! go
+  :config
+  (require 'dap-dlv-go))

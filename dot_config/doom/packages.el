@@ -52,3 +52,4 @@
 (package! org-reverse-datetree)
 (package! run-command)
 (package! org-ql)
+(package! exercism)
