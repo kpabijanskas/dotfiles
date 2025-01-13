@@ -50,15 +50,47 @@ local function catppuccin_config()
 			lsp_trouble = true,
 		},
 	})
+vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = ""})
+vim.fn.sign_define("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = ""})
+vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = ""})
 end
 
 local function cyberdream_config()
-	cb = require("cyberdream")
+	local cb = require("cyberdream")
 	cb.setup({
 		theme = {
 			variant = "light",
 		},
 	})
+end
+
+local function onenord_config()
+  local on = require("onenord")
+  local colors = require("onenord.colors.onenordlight")
+  on.setup({
+    theme = "light",
+    fade_nc = true,
+  })
+
+  -- vim.api.nvim_set_hl(0, "DapUIVariable", { link = 'Normal' })
+  -- vim.api.nvim_set_hl(0, "DapUIValue",{ link = 'Normal' })
+  -- vim.api.nvim_set_hl(0, "DapUIFrameName",{ link = 'Normal' })
+  -- vim.api.nvim_set_hl(0, "DapUIThread", { fg = colors.yellow })
+  -- vim.api.nvim_set_hl(0, "DapUIWatchesValue", { link = 'DapUIThread' })
+  -- vim.api.nvim_set_hl(0, "DapUIBreakpointsInfo", { link = 'DapUIThread' })
+  -- vim.api.nvim_set_hl(0, "DapUIBreakpointsCurrentLine", { fg = colors.yellow, bold=true })
+  -- vim.api.nvim_set_hl(0, "DapUIWatchesEmpty", { fg = colors.red })
+  -- vim.api.nvim_set_hl(0, "DapUIWatchesError", { link = 'DapUIWatchesEmpty' })
+  -- vim.api.nvim_set_hl(0, "DapUIBreakpointsDisabledLine", { fg = colors.light_gray })
+  -- vim.api.nvim_set_hl(0, "DapUISource", { fg = colors.purple })
+  -- vim.api.nvim_set_hl(0, "DapUIBreakpointsPath", { fg = colors.blue })
+  -- vim.api.nvim_set_hl(0, "DapUIScope", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUILineNumber", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUIBreakpointsLine", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUIFloatBorder", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUIStoppedThread", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUIDecoration", { link = 'DapUIBreakpointsPath' })
+  -- vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = colors.blue, bold=true })
 end
 
 return {
@@ -135,4 +167,9 @@ return {
 		pn.doomone,
 		priority = 1000,
 	},
+  {
+    pn.onenord,
+		priority = 1000,
+    config = onenord_config,
+  }
 }

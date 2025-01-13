@@ -50,6 +50,7 @@ return {
     notify = "rcarriga/nvim-notify",
     oil = "stevearc/oil.nvim",
     onehalf = "MarcoKorinth/onehalf.nvim",
+    onenord = "rmehri01/onenord.nvim",
     org = "nvim-orgmode/orgmode",
     org_bullets = "nvim-orgmode/org-bullets.nvim",
     org_checkbox = "massix/org-checkbox.nvim",

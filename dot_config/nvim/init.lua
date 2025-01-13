@@ -67,37 +67,37 @@ vim.o.encoding = "utf-8"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
-	checker = {
-		enabled = false,
-	},
-	change_detection = {
-		notify = false,
-	},
-    dev = {
-        path = "~/repos/github.com/kpabijanskas"
-    }
+  checker = {
+    enabled = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+  dev = {
+    path = "~/repos/github.com/kpabijanskas"
+  }
 })
 
 -- Perl-style regex by default
 vim.keymap.set("n", "/", "/\\v", {
-	noremap = true,
-	silent = true,
+  noremap = true,
+  silent = true,
 })
 vim.keymap.set("x", "/", "/\\v", {
-	noremap = true,
-	silent = true,
+  noremap = true,
+  silent = true,
 })
 
 -- Disable arrows
@@ -110,4 +110,4 @@ vim.keymap.set({ "n", "i", "x" }, "<right>", "<nop>", {})
 vim.keymap.set({ "n", "i", "x", "v" }, "<F1>", "<nop>", {})
 
 -- colorscheme
-vim.cmd.colorscheme("tokyonight-day")
+vim.cmd.colorscheme("catppuccin")

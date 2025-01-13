@@ -1,7 +1,11 @@
 local pn = require("plugin_names")
 
 local function dap_ui_config()
-	require("dapui").setup({
+  local dapui = require("dapui")
+	dapui.setup({
+    controls = {
+      enabled = false,
+    },
 		layouts = {
 			{
 				elements = {
@@ -37,6 +41,15 @@ local function dap_ui_config()
 			},
 		},
 	})
+
+  local wk = require("which-key")
+  local kb_table = {
+    {"<leader>gu", dapui.toggle, desc = "Toggle DAP UI"}
+  }
+  wk.add({
+    { mode = "n", kb_table },
+    { mode = "v", kb_table },
+  })
 end
 
 return {
